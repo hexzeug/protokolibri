@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5F6B5D792D70C83200A73B34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B5D782D70C83200A73B34 /* AppDelegate.swift */; };
+		5F6B5D7D2D70C83200A73B34 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D7B2D70C83200A73B34 /* Main.html */; };
+		5F6B5D7F2D70C83200A73B34 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D7E2D70C83200A73B34 /* Icon.png */; };
+		5F6B5D812D70C83200A73B34 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D802D70C83200A73B34 /* Style.css */; };
+		5F6B5D832D70C83200A73B34 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B5D822D70C83200A73B34 /* SceneDelegate.swift */; };
+		5F6B5D852D70C83200A73B34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B5D842D70C83200A73B34 /* ViewController.swift */; };
+		5F6B5D882D70C83200A73B34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D862D70C83200A73B34 /* LaunchScreen.storyboard */; };
+		5F6B5D8B2D70C83200A73B34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D892D70C83200A73B34 /* Main.storyboard */; };
+		5F6B5D932D70C83500A73B34 /* Protokolibri Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5F6B5D922D70C83500A73B34 /* Protokolibri Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5F6B5D982D70C83500A73B34 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6B5D972D70C83500A73B34 /* SafariWebExtensionHandler.swift */; };
+		5F6B5D9B2D70C83500A73B34 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D9A2D70C83500A73B34 /* _locales */; };
+		5F6B5D9D2D70C83500A73B34 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D9C2D70C83500A73B34 /* images */; };
+		5F6B5D9F2D70C83500A73B34 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D9E2D70C83500A73B34 /* manifest.json */; };
+		5F6B5DA12D70C83500A73B34 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA02D70C83500A73B34 /* background.js */; };
+		5F6B5DA32D70C83500A73B34 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA22D70C83500A73B34 /* content.js */; };
+		5F6B5DA52D70C83500A73B34 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA42D70C83500A73B34 /* popup.html */; };
+		5F6B5DA72D70C83500A73B34 /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA62D70C83500A73B34 /* popup.css */; };
+		5F6B5DA92D70C83500A73B34 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA82D70C83500A73B34 /* popup.js */; };
+		5F6B5DAB2D70C83500A73B34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D8C2D70C83400A73B34 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5F6B5D942D70C83500A73B34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5F6B5D6D2D70C83200A73B34 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5F6B5D912D70C83500A73B34;
+			remoteInfo = "Protokolibri Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5F6B5DB12D70C83500A73B34 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5F6B5D932D70C83500A73B34 /* Protokolibri Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5F6B5D752D70C83200A73B34 /* Protokolibri.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Protokolibri.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F6B5D782D70C83200A73B34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5F6B5D7C2D70C83200A73B34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
+		5F6B5D7E2D70C83200A73B34 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		5F6B5D802D70C83200A73B34 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		5F6B5D822D70C83200A73B34 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		5F6B5D842D70C83200A73B34 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5F6B5D872D70C83200A73B34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5F6B5D8A2D70C83200A73B34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5F6B5D8C2D70C83400A73B34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5F6B5D8D2D70C83400A73B34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F6B5D922D70C83500A73B34 /* Protokolibri Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Protokolibri Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F6B5D972D70C83500A73B34 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		5F6B5D9A2D70C83500A73B34 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _locales; sourceTree = "<group>"; };
+		5F6B5D9C2D70C83500A73B34 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		5F6B5D9E2D70C83500A73B34 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		5F6B5DA02D70C83500A73B34 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
+		5F6B5DA22D70C83500A73B34 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
+		5F6B5DA42D70C83500A73B34 /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = popup.html; sourceTree = "<group>"; };
+		5F6B5DA62D70C83500A73B34 /* popup.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
+		5F6B5DA82D70C83500A73B34 /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = popup.js; sourceTree = "<group>"; };
+		5F6B5DAA2D70C83500A73B34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5F6B5D722D70C83200A73B34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F6B5D8F2D70C83500A73B34 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5F6B5D6C2D70C83200A73B34 = {
+			isa = PBXGroup;
+			children = (
+				5F6B5D772D70C83200A73B34 /* Protokolibri */,
+				5F6B5D962D70C83500A73B34 /* Protokolibri Extension */,
+				5F6B5D762D70C83200A73B34 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5F6B5D762D70C83200A73B34 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5F6B5D752D70C83200A73B34 /* Protokolibri.app */,
+				5F6B5D922D70C83500A73B34 /* Protokolibri Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5F6B5D772D70C83200A73B34 /* Protokolibri */ = {
+			isa = PBXGroup;
+			children = (
+				5F6B5D782D70C83200A73B34 /* AppDelegate.swift */,
+				5F6B5D822D70C83200A73B34 /* SceneDelegate.swift */,
+				5F6B5D842D70C83200A73B34 /* ViewController.swift */,
+				5F6B5D862D70C83200A73B34 /* LaunchScreen.storyboard */,
+				5F6B5D892D70C83200A73B34 /* Main.storyboard */,
+				5F6B5D8C2D70C83400A73B34 /* Assets.xcassets */,
+				5F6B5D8D2D70C83400A73B34 /* Info.plist */,
+				5F6B5D7A2D70C83200A73B34 /* Resources */,
+			);
+			path = Protokolibri;
+			sourceTree = "<group>";
+		};
+		5F6B5D7A2D70C83200A73B34 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5F6B5D7B2D70C83200A73B34 /* Main.html */,
+				5F6B5D7E2D70C83200A73B34 /* Icon.png */,
+				5F6B5D802D70C83200A73B34 /* Style.css */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5F6B5D962D70C83500A73B34 /* Protokolibri Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5F6B5D972D70C83500A73B34 /* SafariWebExtensionHandler.swift */,
+				5F6B5DAA2D70C83500A73B34 /* Info.plist */,
+				5F6B5D992D70C83500A73B34 /* Resources */,
+			);
+			path = "Protokolibri Extension";
+			sourceTree = "<group>";
+		};
+		5F6B5D992D70C83500A73B34 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5F6B5D9A2D70C83500A73B34 /* _locales */,
+				5F6B5D9C2D70C83500A73B34 /* images */,
+				5F6B5D9E2D70C83500A73B34 /* manifest.json */,
+				5F6B5DA02D70C83500A73B34 /* background.js */,
+				5F6B5DA22D70C83500A73B34 /* content.js */,
+				5F6B5DA42D70C83500A73B34 /* popup.html */,
+				5F6B5DA62D70C83500A73B34 /* popup.css */,
+				5F6B5DA82D70C83500A73B34 /* popup.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5F6B5D742D70C83200A73B34 /* Protokolibri */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F6B5DB22D70C83500A73B34 /* Build configuration list for PBXNativeTarget "Protokolibri" */;
+			buildPhases = (
+				5F6B5D712D70C83200A73B34 /* Sources */,
+				5F6B5D722D70C83200A73B34 /* Frameworks */,
+				5F6B5D732D70C83200A73B34 /* Resources */,
+				5F6B5DB12D70C83500A73B34 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5F6B5D952D70C83500A73B34 /* PBXTargetDependency */,
+			);
+			name = Protokolibri;
+			productName = Protokolibri;
+			productReference = 5F6B5D752D70C83200A73B34 /* Protokolibri.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5F6B5D912D70C83500A73B34 /* Protokolibri Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F6B5DAE2D70C83500A73B34 /* Build configuration list for PBXNativeTarget "Protokolibri Extension" */;
+			buildPhases = (
+				5F6B5D8E2D70C83500A73B34 /* Sources */,
+				5F6B5D8F2D70C83500A73B34 /* Frameworks */,
+				5F6B5D902D70C83500A73B34 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Protokolibri Extension";
+			productName = "Protokolibri Extension";
+			productReference = 5F6B5D922D70C83500A73B34 /* Protokolibri Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F6B5D6D2D70C83200A73B34 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					5F6B5D742D70C83200A73B34 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					5F6B5D912D70C83500A73B34 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+				};
+			};
+			buildConfigurationList = 5F6B5D702D70C83200A73B34 /* Build configuration list for PBXProject "Protokolibri" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5F6B5D6C2D70C83200A73B34;
+			productRefGroup = 5F6B5D762D70C83200A73B34 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5F6B5D742D70C83200A73B34 /* Protokolibri */,
+				5F6B5D912D70C83500A73B34 /* Protokolibri Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5F6B5D732D70C83200A73B34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F6B5D7F2D70C83200A73B34 /* Icon.png in Resources */,
+				5F6B5D8B2D70C83200A73B34 /* Main.storyboard in Resources */,
+				5F6B5D882D70C83200A73B34 /* LaunchScreen.storyboard in Resources */,
+				5F6B5D7D2D70C83200A73B34 /* Main.html in Resources */,
+				5F6B5DAB2D70C83500A73B34 /* Assets.xcassets in Resources */,
+				5F6B5D812D70C83200A73B34 /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F6B5D902D70C83500A73B34 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F6B5DA12D70C83500A73B34 /* background.js in Resources */,
+				5F6B5DA72D70C83500A73B34 /* popup.css in Resources */,
+				5F6B5DA52D70C83500A73B34 /* popup.html in Resources */,
+				5F6B5D9D2D70C83500A73B34 /* images in Resources */,
+				5F6B5D9F2D70C83500A73B34 /* manifest.json in Resources */,
+				5F6B5D9B2D70C83500A73B34 /* _locales in Resources */,
+				5F6B5DA32D70C83500A73B34 /* content.js in Resources */,
+				5F6B5DA92D70C83500A73B34 /* popup.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5F6B5D712D70C83200A73B34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F6B5D852D70C83200A73B34 /* ViewController.swift in Sources */,
+				5F6B5D792D70C83200A73B34 /* AppDelegate.swift in Sources */,
+				5F6B5D832D70C83200A73B34 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F6B5D8E2D70C83500A73B34 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F6B5D982D70C83500A73B34 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5F6B5D952D70C83500A73B34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5F6B5D912D70C83500A73B34 /* Protokolibri Extension */;
+			targetProxy = 5F6B5D942D70C83500A73B34 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5F6B5D7B2D70C83200A73B34 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F6B5D7C2D70C83200A73B34 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		5F6B5D862D70C83200A73B34 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F6B5D872D70C83200A73B34 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		5F6B5D892D70C83200A73B34 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F6B5D8A2D70C83200A73B34 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5F6B5DAC2D70C83500A73B34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5F6B5DAD2D70C83500A73B34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5F6B5DAF2D70C83500A73B34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Protokolibri Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Protokolibri Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hexzeug.Protokolibri.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5F6B5DB02D70C83500A73B34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Protokolibri Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Protokolibri Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hexzeug.Protokolibri.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5F6B5DB32D70C83500A73B34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Protokolibri/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Protokolibri;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hexzeug.Protokolibri;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5F6B5DB42D70C83500A73B34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Protokolibri/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Protokolibri;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hexzeug.Protokolibri;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5F6B5D702D70C83200A73B34 /* Build configuration list for PBXProject "Protokolibri" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F6B5DAC2D70C83500A73B34 /* Debug */,
+				5F6B5DAD2D70C83500A73B34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F6B5DAE2D70C83500A73B34 /* Build configuration list for PBXNativeTarget "Protokolibri Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F6B5DAF2D70C83500A73B34 /* Debug */,
+				5F6B5DB02D70C83500A73B34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F6B5DB22D70C83500A73B34 /* Build configuration list for PBXNativeTarget "Protokolibri" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F6B5DB32D70C83500A73B34 /* Debug */,
+				5F6B5DB42D70C83500A73B34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5F6B5D6D2D70C83200A73B34 /* Project object */;
+}
