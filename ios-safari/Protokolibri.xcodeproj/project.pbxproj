@@ -451,6 +451,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ACTP449WJG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Protokolibri Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Protokolibri Extension";
@@ -480,6 +481,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ACTP449WJG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Protokolibri Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Protokolibri Extension";
@@ -512,6 +514,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ACTP449WJG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Protokolibri/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Protokolibri;
@@ -548,6 +551,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ACTP449WJG;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Protokolibri/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Protokolibri;
