@@ -1,12 +1,15 @@
-/**Please note:
- * Safari sometimes fires tab events for tabs that "do not exist". (I do not exactly know
- * how and why but I suspect some background pre-loading stuff). To make sure these events
- * are not propagated every event handler first calls tabs.get() for the tab id and ignores
- * the event if an error is returned. (If a real event is falsly ignored because the tab was
- * deleted before tabs.get() returned the event was not of big interest anyways.)
- */
+browser.windows.onFocusChanged.addListener(async (windowId) => {
+  console.debug(`WINDOW ${windowId}`);
+  const tabs = await browser.tabs.query({
+    lastFocusedWindow: true,
+    active: true,
+  });
+  console.debug(`ACTIVE TAB ${tabs.map((tab) => tab.id)}`);
+});
+
 browser.tabs.onActivated.addListener(
   ({ tabId, previousTabId, windowId: _windowId }) => {
+    console.debug(`TAB ${previousTabId} -> ${tabId}`);
     return;
     // ignore event, if no change was made; (happens for example when last tab in a window is removed)
     if (tabId === previousTabId) return;
@@ -65,17 +68,17 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.debug(`UPDATE: tab ${tabId} ${JSON.stringify(changeInfo)}`);
 
   // event UPDATED
-  const updated = {
-    tabId,
-    type: 'updated',
-    time: Date.now(),
-    url: tab.url,
-    title: tab.status === 'complete' ? tab.title : null,
-  };
   if (
     (changeInfo.hasOwnProperty('status') || changeInfo.hasOwnProperty('url')) &&
     tab.status === 'complete'
   ) {
+    const updated = {
+      tabId,
+      type: 'updated',
+      time: Date.now(),
+      url: tab.url,
+      title: tab.title, // title will always be loaded in this if-body
+    };
     console.log(`${tabId} was updated`, updated);
   }
 });
