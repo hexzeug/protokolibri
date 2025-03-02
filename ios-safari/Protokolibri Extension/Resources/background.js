@@ -1,34 +1,3 @@
-// WARNING: this probably is vurnable to race conditions
-const eventQueue = {
-  get: async () =>
-    (
-      await browser.storage.session.get({
-        eventQueue: [],
-      })
-    ).eventQueue,
-  set: async (q) => {
-    await browser.storage.session.set({ eventQueue: q });
-  },
-  add: async (event) => {
-    const q = await eventQueue.get();
-    q.push({ verified: false, ...event });
-    await eventQueue.set(q);
-  },
-  verify: async (tabId) => {
-    const q = await eventQueue.get();
-    q.forEach((event) => {
-      if (event.tabId === tabId) event.verified = true;
-    });
-    await eventQueue.set(q);
-  },
-  cancel: async (tabId) => {
-    const q = await eventQueue.get();
-    await eventQueue.set(
-      q.filter((event) => !event.verified && event.tabId != tabId)
-    );
-  },
-};
-
 /**Please note:
  * Safari sometimes fires tab events for tabs that "do not exist". (I do not exactly know
  * how and why but I suspect some background pre-loading stuff). To make sure these events
@@ -38,118 +7,76 @@ const eventQueue = {
  */
 browser.tabs.onActivated.addListener(
   ({ tabId, previousTabId, windowId: _windowId }) => {
+    return;
     // ignore event, if no change was made; (happens for example when last tab in a window is removed)
     if (tabId === previousTabId) return;
 
     // events DEACTIVATED & ACTIVATED
     const time = Date.now();
-    eventQueue.add({ tabId: previousTabId, type: 'deactivated', time });
-    eventQueue.add({ tabId, type: 'activated', time });
+    const deactivated = { tabId: previousTabId, type: 'deactivated', time };
+    const activated = { tabId, type: 'activated', time };
 
-    // check if tabs exist -> verify or cancel event
+    // check if tabs exist -> only send event if tab exists
     browser.tabs
       .get(previousTabId)
       .then(() => {
-        eventQueue.verify(previousTabId);
-        console.log(`${previousTabId} was deactivated`);
+        console.log(`${previousTabId} was deactivated`, deactivated);
       })
       .catch(() => {
-        eventQueue.cancel(previousTabId);
+        console.error(`${previousTabId} was deactivated`);
       });
     browser.tabs
       .get(tabId)
       .then(() => {
-        eventQueue.verify(tabId);
-        console.log(`${tabId} was activated`);
+        console.log(`${tabId} was activated`, activated);
       })
       .catch(() => {
-        eventQueue.cancel(tabId);
+        console.error(`${tabId} was activated`);
       });
   }
 );
 
-browser.tabs.onCreated.addListener(async (tab) => {
+browser.tabs.onCreated.addListener((tab) => {
+  // tab is background tab -> ignore event
+  if (Number.isNaN(tab.index) || tab.windowId === -1) return;
+
   // event CREATED
-  const event = {
+  const created = {
     tabId: tab.id,
     type: 'created',
     time: Date.now(),
-    active: tab.active,
     url: tab.url,
+    title: tab.status === 'complete' ? tab.title : null,
   };
-  if (tab.status === 'complete') {
-    event.title = tab.title;
-    console.log(
-      `${tab.id} was created (window: ${tab.windowId}, tab: ${tab.index}, active: ${tab.active})`
-    );
-  }
-  await eventQueue.add(event);
-
-  // check if tab exist -> verify or cancel event
-  try {
-    await browser.tabs.get(tab.id);
-    await eventQueue.verify(tab.id);
-  } catch {
-    await eventQueue.cancel(tab.id);
-  }
+  console.log(`${tab.id} was created`, created);
 });
 
-browser.tabs.onRemoved.addListener(async (tabId, _removeInfo) => {
+browser.tabs.onRemoved.addListener((tabId, _removeInfo) => {
   // event REMOVED
-  await eventQueue.add({
+  const removed = {
     tabId,
     type: 'removed',
     time: Date.now(),
-    verified: true,
-  });
-  console.log(`${tabId} was removed`);
-  // tabs never exist after removal -> no check for existance here
+  };
+  console.log(`${tabId} was removed`, removed);
 });
 
-browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  console.log(`${tabId} was updated ${JSON.stringify(changeInfo)}`);
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  console.debug(`UPDATE: tab ${tabId} ${JSON.stringify(changeInfo)}`);
 
-  if (changeInfo.hasOwnProperty('url')) {
-    // event UPDATED
-    const event = {
-      tabId,
-      type: 'updated',
-      time: Date.now(),
-      url: tab.url,
-    };
-    if (tab.status === 'complete') {
-      console.log(`${tabId} opened ${tab.title} (${tab.url})`);
-      event.title = tab.title;
-    }
-    await eventQueue.add(event);
-
-    // check if tab exist -> verify or cancel event
-    try {
-      await browser.tab.get(tabId);
-      await eventQueue.verify(tabId);
-    } catch {
-      await eventQueue.cancel(tabId);
-    }
-  } else if (
-    changeInfo.hasOwnProperty('status') &&
-    changeInfo.status === 'complete'
+  // event UPDATED
+  const updated = {
+    tabId,
+    type: 'updated',
+    time: Date.now(),
+    url: tab.url,
+    title: tab.status === 'complete' ? tab.title : null,
+  };
+  if (
+    (changeInfo.hasOwnProperty('status') || changeInfo.hasOwnProperty('url')) &&
+    tab.status === 'complete'
   ) {
-    // add page title to events (after their creation)
-    const q = await eventQueue.get();
-    q.forEach((event) => {
-      if (
-        event.tabId === tabId &&
-        event.hasOwnProperty('url') &&
-        !event.hasOwnProperty('title')
-      ) {
-        if (event.url !== tab.url) {
-          event.outdated = true;
-        } else {
-          event.title === tab.title;
-        }
-      }
-    });
-    await eventQueue.set(q.filter((event) => !event['outdated']));
+    console.log(`${tabId} was updated`, updated);
   }
 });
 
@@ -157,27 +84,6 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 browser.alarms.create('heartbeat', { periodInMinutes: 0.5 });
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === 'heartbeat') {
-    heartbeat();
     // console.log('heartbeat');
   }
 });
-
-const heartbeat = async () => {
-  const q = await eventQueue.get();
-  const send = [];
-  const keep = [];
-  q.forEach((event) => {
-    if (
-      event.verified &&
-      event.hasOwnProperty('url') === event.hasOwnProperty('title')
-    ) {
-      delete event.verified;
-      send.push(event);
-    } else {
-      keep.push(event);
-    }
-  });
-  await eventQueue.set(keep);
-
-  send.forEach(console.log);
-};
