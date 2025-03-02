@@ -15,15 +15,9 @@
   },
 
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"],
+    "persistent": "false"
   },
-
-  "content_scripts": [
-    {
-      "js": ["content.js"],
-      "matches": ["*://example.com/*"]
-    }
-  ],
 
   "action": {
     "default_popup": "popup.html",
@@ -37,5 +31,5 @@
     }
   },
 
-  "permissions": ["webNavigation"]
+  "permissions": ["tabs", "alarms", "storage"]
 }
