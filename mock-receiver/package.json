@@ -1,0 +1,11 @@
+{
+  "name": "mock-receiver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Siemen Zielke",
+  "license": "MIT",
+  "description": ""
+}

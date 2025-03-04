@@ -5,6 +5,9 @@ Kolibris is the German word for humming-bird thus the name _protocol humming-bir
 
 ## About this repository
 
+### Mock Receiver
+Super simple http server. Always responds with 201 Created. Logs requests with body to console.
+
 ### iOS Safari
 
 - For best results please disable multitasking (parallel windows) in the iOS settings.
