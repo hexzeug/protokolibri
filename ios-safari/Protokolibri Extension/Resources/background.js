@@ -1,4 +1,6 @@
 const SERVER_URL = 'http://192.168.178.30/api/safari-ios/'; // allways ending in '/'
+const SERVER_USER = 'device';
+const SERVER_PASSWORD = 'test';
 
 browser.windows.onFocusChanged.addListener(async (windowId) => {
   console.debug(`WINDOW ${windowId}`);
@@ -97,9 +99,21 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
+const send = (path, init) => {
+  if (path.startsWith('/')) path = path.slice(1);
+  return fetch(new URL(SERVER_URL + path), {
+    ...init,
+    credentials: 'include',
+    headers: {
+      ...init.headers,
+      Authorization: `Basic ${btoa(`${SERVER_USER}:${SERVER_PASSWORD}`)}`,
+    },
+  });
+};
+
 const sendEvent = async (event) => {
   try {
-    const res = await fetch(SERVER_URL + 'event/', {
+    const res = await send('event/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -119,6 +133,6 @@ const sendEvent = async (event) => {
 browser.alarms.create('heartbeat', { periodInMinutes: 0.5 });
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === 'heartbeat') {
-    fetch(SERVER_URL + 'heartbeat/', { method: 'POST' }).finally(() => {});
+    send('heartbeat/', { method: 'POST' }).finally(() => {});
   }
 });
