@@ -12,7 +12,12 @@ http
         console.log(`${req.url} <- ${req.method} ${body}`);
       });
 
-    res.writeHead(201);
+    res.writeHead(201, {
+      'access-control-allow-origin': '*',
+      'access-control-allow-methods': '*',
+      'access-control-allow-headers': '*',
+      'access-control-allow-credentials': true,
+    });
     res.end();
   })
   .listen(80);

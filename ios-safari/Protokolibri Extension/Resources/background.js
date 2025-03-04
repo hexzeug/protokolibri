@@ -1,3 +1,5 @@
+const SERVER_URL = 'http://192.168.178.30/api/safari-ios/'; // allways ending in '/'
+
 browser.windows.onFocusChanged.addListener(async (windowId) => {
   console.debug(`WINDOW ${windowId}`);
 
@@ -15,6 +17,7 @@ browser.windows.onFocusChanged.addListener(async (windowId) => {
     if (tabs.length === 1) activated.tabId = tabs[0].id;
   }
   console.log(`${activated.tabId} was activated (window-event)`, activated);
+  sendEvent(activated);
 });
 
 browser.tabs.onActivated.addListener(
@@ -31,6 +34,7 @@ browser.tabs.onActivated.addListener(
       time: Date.now(),
     };
     console.log(`${tabId} was activated (tabs-event)`, activated);
+    sendEvent(activated);
   }
 );
 
@@ -48,6 +52,7 @@ browser.tabs.onCreated.addListener((tab) => {
     title: tab.status === 'complete' ? tab.title : null,
   };
   console.log(`${tab.id} was created`, created);
+  sendEvent(created);
 
   if (tab.active) {
     // event ACTIVATED
@@ -57,6 +62,7 @@ browser.tabs.onCreated.addListener((tab) => {
       time,
     };
     console.log(`${tab.id} was activated (creation-event)`, activated);
+    sendEvent(activated);
   }
 });
 
@@ -68,6 +74,7 @@ browser.tabs.onRemoved.addListener((tabId, _removeInfo) => {
     time: Date.now(),
   };
   console.log(`${tabId} was removed`, removed);
+  sendEvent(removed);
 });
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -86,13 +93,32 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       title: tab.title, // title will always be loaded in this if-body
     };
     console.log(`${tabId} was updated`, updated);
+    sendEvent(updated);
   }
 });
+
+const sendEvent = async (event) => {
+  try {
+    const res = await fetch(SERVER_URL + 'event/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(event),
+    });
+    if (res.status !== 201) {
+      throw new TypeError(`API error: ${res.status} ${res.statusText}`);
+    }
+  } catch (e) {
+    console.error(e);
+    // todo: cache event
+  }
+};
 
 // heartbeat
 browser.alarms.create('heartbeat', { periodInMinutes: 0.5 });
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === 'heartbeat') {
-    // console.log('heartbeat');
+    fetch(SERVER_URL + 'heartbeat/', { method: 'POST' }).finally(() => {});
   }
 });
