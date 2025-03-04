@@ -1,41 +1,36 @@
 browser.windows.onFocusChanged.addListener(async (windowId) => {
   console.debug(`WINDOW ${windowId}`);
-  const tabs = await browser.tabs.query({
-    lastFocusedWindow: true,
-    active: true,
-  });
-  console.debug(`ACTIVE TAB ${tabs.map((tab) => tab.id)}`);
+
+  // event ACTIVATED
+  const activated = {
+    tabId: null,
+    type: 'activated',
+    time: Date.now(),
+  };
+  if (windowId !== browser.windows.WINDOW_ID_NONE) {
+    const tabs = await browser.tabs.query({
+      windowId,
+      active: true,
+    });
+    if (tabs.length === 1) activated.tabId = tabs[0].id;
+  }
+  console.log(`${activated.tabId} was activated (window-event)`, activated);
 });
 
 browser.tabs.onActivated.addListener(
   ({ tabId, previousTabId, windowId: _windowId }) => {
     console.debug(`TAB ${previousTabId} -> ${tabId}`);
-    return;
+
     // ignore event, if no change was made; (happens for example when last tab in a window is removed)
     if (tabId === previousTabId) return;
 
-    // events DEACTIVATED & ACTIVATED
-    const time = Date.now();
-    const deactivated = { tabId: previousTabId, type: 'deactivated', time };
-    const activated = { tabId, type: 'activated', time };
-
-    // check if tabs exist -> only send event if tab exists
-    browser.tabs
-      .get(previousTabId)
-      .then(() => {
-        console.log(`${previousTabId} was deactivated`, deactivated);
-      })
-      .catch(() => {
-        console.error(`${previousTabId} was deactivated`);
-      });
-    browser.tabs
-      .get(tabId)
-      .then(() => {
-        console.log(`${tabId} was activated`, activated);
-      })
-      .catch(() => {
-        console.error(`${tabId} was activated`);
-      });
+    // event ACTIVATED
+    const activated = {
+      tabId,
+      type: 'activated',
+      time: Date.now(),
+    };
+    console.log(`${tabId} was activated (tabs-event)`, activated);
   }
 );
 
@@ -43,15 +38,26 @@ browser.tabs.onCreated.addListener((tab) => {
   // tab is background tab -> ignore event
   if (Number.isNaN(tab.index) || tab.windowId === -1) return;
 
+  const time = Date.now();
   // event CREATED
   const created = {
     tabId: tab.id,
     type: 'created',
-    time: Date.now(),
+    time,
     url: tab.url,
     title: tab.status === 'complete' ? tab.title : null,
   };
   console.log(`${tab.id} was created`, created);
+
+  if (tab.active) {
+    // event ACTIVATED
+    const activated = {
+      tabId: tab.id,
+      type: 'activated',
+      time,
+    };
+    console.log(`${tab.id} was activated (creation-event)`, activated);
+  }
 });
 
 browser.tabs.onRemoved.addListener((tabId, _removeInfo) => {
