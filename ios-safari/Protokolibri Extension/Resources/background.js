@@ -1,6 +1,4 @@
-const SERVER_URL = 'http://192.168.178.30/api/safari-ios/'; // allways ending in '/'
-const SERVER_USER = 'device';
-const SERVER_PASSWORD = 'test';
+'use strict';
 
 browser.windows.onFocusChanged.addListener(async (windowId) => {
   console.debug(`WINDOW ${windowId}`);
@@ -99,21 +97,46 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
-const send = (path, init) => {
-  if (path.startsWith('/')) path = path.slice(1);
-  return fetch(new URL(SERVER_URL + path), {
+const loadServerAccess = async () => {
+  const { server } = await browser.storage.local.get('server');
+  if (!server) {
+    throw new TypeError('No server login data');
+  }
+  return server;
+};
+
+let SERVER_ACCESS = loadServerAccess();
+let DEVICE_NAME = Promise.resolve('Test Device Name');
+
+browser.storage.local.onChanged.addListener(async ({ server }) => {
+  if (server) {
+    if (server.newValue) {
+      SERVER_ACCESS = Promise.resolve(server.newValue);
+    } else {
+      SERVER_ACCESS = Promise.reject(new TypeError('No server login data'));
+    }
+  }
+});
+
+const send = async (relative_url, init) => {
+  if (relative_url.startsWith('/')) relative_url = relative_url.slice(1);
+
+  const { url: server_url, user, password } = await SERVER_ACCESS;
+  const url = new URL(server_url + relative_url);
+  url.searchParams.set('device', await DEVICE_NAME);
+  return await fetch(url, {
     ...init,
     credentials: 'include',
     headers: {
       ...init.headers,
-      Authorization: `Basic ${btoa(`${SERVER_USER}:${SERVER_PASSWORD}`)}`,
+      Authorization: `Basic ${btoa(`${user}:${password}`)}`,
     },
   });
 };
 
 const sendEvent = async (event) => {
   try {
-    const res = await send('event/', {
+    const res = await send('/event', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -133,6 +156,6 @@ const sendEvent = async (event) => {
 browser.alarms.create('heartbeat', { periodInMinutes: 0.5 });
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === 'heartbeat') {
-    send('heartbeat/', { method: 'POST' }).finally(() => {});
+    send('/heartbeat', { method: 'POST' }).catch(() => {});
   }
 });
