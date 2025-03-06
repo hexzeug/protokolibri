@@ -1,0 +1,15 @@
+:root {
+    font-family: sans-serif;
+}
+
+.container {
+    width: min(70ch, 90svw);
+    margin-inline: auto;
+    margin-block: 2rem;
+}
+
+.box {
+    margin: .25rem;
+    border: solid 2px;
+    padding-inline: 1rem;
+}

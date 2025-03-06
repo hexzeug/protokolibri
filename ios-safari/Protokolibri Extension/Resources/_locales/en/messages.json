@@ -1,10 +1,60 @@
 {
-    "extension_name": {
-        "message": "Protokolibri Extension",
-        "description": "The display name for the extension."
-    },
-    "extension_description": {
-        "message": "This is Protokolibri Extension. You should tell us what your extension does here.",
-        "description": "Description of what the extension does."
+  "extension_name": {
+    "message": "Protokolibri Extension",
+    "description": "The display name for the extension."
+  },
+  "extension_description": {
+    "message": "This is Protokolibri Extension. You should tell us what your extension does here.",
+    "description": "Description of what the extension does."
+  },
+  "login_page_title": {
+    "message": "Protokolibri Extension Login"
+  },
+  "login_confirm": {
+    "message": "If you continue you will login at this remote Protokolibri server:\nUrl: $URL$\nUser: $USER$",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "user": {
+        "content": "$2",
+        "example": "device"
+      }
     }
+  },
+  "login_status_success": {
+    "message": "Login successful"
+  },
+  "login_message_success": {
+    "message": "Logged in at this remote server:<pre>Url: $URL$<br>User: $USER$</pre>You may close this tab now.",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "user": {
+        "content": "$2",
+        "example": "device"
+      }
+    }
+  },
+  "login_status_failed": {
+    "message": "Login failed"
+  },
+  "login_message_bad_data": {
+    "message": "Could not receive login data. Please make sure to follow the instructions on your Protokolibri server."
+  },
+  "login_message_canceled": {
+    "message": "You canceled the login."
+  },
+  "login_message_unauthorized": {
+    "message": "Wrong user or password."
+  },
+  "login_message_network_error": {
+    "message": "A network error occured."
+  },
+  "login_message_internal_error": {
+    "message": "An internal error occured."
+  }
 }

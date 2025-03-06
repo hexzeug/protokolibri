@@ -22,9 +22,9 @@
 		5F6B5D9F2D70C83500A73B34 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D9E2D70C83500A73B34 /* manifest.json */; };
 		5F6B5DA12D70C83500A73B34 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA02D70C83500A73B34 /* background.js */; };
 		5F6B5DA32D70C83500A73B34 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA22D70C83500A73B34 /* content.js */; };
-		5F6B5DA52D70C83500A73B34 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA42D70C83500A73B34 /* popup.html */; };
-		5F6B5DA72D70C83500A73B34 /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA62D70C83500A73B34 /* popup.css */; };
-		5F6B5DA92D70C83500A73B34 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA82D70C83500A73B34 /* popup.js */; };
+		5F6B5DA52D70C83500A73B34 /* login.html in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA42D70C83500A73B34 /* login.html */; };
+		5F6B5DA72D70C83500A73B34 /* login.css in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA62D70C83500A73B34 /* login.css */; };
+		5F6B5DA92D70C83500A73B34 /* login.js in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5DA82D70C83500A73B34 /* login.js */; };
 		5F6B5DAB2D70C83500A73B34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F6B5D8C2D70C83400A73B34 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -71,9 +71,9 @@
 		5F6B5D9E2D70C83500A73B34 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
 		5F6B5DA02D70C83500A73B34 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
 		5F6B5DA22D70C83500A73B34 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
-		5F6B5DA42D70C83500A73B34 /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = popup.html; sourceTree = "<group>"; };
-		5F6B5DA62D70C83500A73B34 /* popup.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
-		5F6B5DA82D70C83500A73B34 /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = popup.js; sourceTree = "<group>"; };
+		5F6B5DA42D70C83500A73B34 /* login.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = login.html; sourceTree = "<group>"; };
+		5F6B5DA62D70C83500A73B34 /* login.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = login.css; sourceTree = "<group>"; };
+		5F6B5DA82D70C83500A73B34 /* login.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = login.js; sourceTree = "<group>"; };
 		5F6B5DAA2D70C83500A73B34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,9 +156,9 @@
 				5F6B5D9E2D70C83500A73B34 /* manifest.json */,
 				5F6B5DA02D70C83500A73B34 /* background.js */,
 				5F6B5DA22D70C83500A73B34 /* content.js */,
-				5F6B5DA42D70C83500A73B34 /* popup.html */,
-				5F6B5DA62D70C83500A73B34 /* popup.css */,
-				5F6B5DA82D70C83500A73B34 /* popup.js */,
+				5F6B5DA42D70C83500A73B34 /* login.html */,
+				5F6B5DA62D70C83500A73B34 /* login.css */,
+				5F6B5DA82D70C83500A73B34 /* login.js */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -258,13 +258,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F6B5DA12D70C83500A73B34 /* background.js in Resources */,
-				5F6B5DA72D70C83500A73B34 /* popup.css in Resources */,
-				5F6B5DA52D70C83500A73B34 /* popup.html in Resources */,
+				5F6B5DA72D70C83500A73B34 /* login.css in Resources */,
+				5F6B5DA52D70C83500A73B34 /* login.html in Resources */,
 				5F6B5D9D2D70C83500A73B34 /* images in Resources */,
 				5F6B5D9F2D70C83500A73B34 /* manifest.json in Resources */,
 				5F6B5D9B2D70C83500A73B34 /* _locales in Resources */,
 				5F6B5DA32D70C83500A73B34 /* content.js in Resources */,
-				5F6B5DA92D70C83500A73B34 /* popup.js in Resources */,
+				5F6B5DA92D70C83500A73B34 /* login.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

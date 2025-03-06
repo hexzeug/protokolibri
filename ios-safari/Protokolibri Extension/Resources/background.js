@@ -80,21 +80,42 @@ browser.tabs.onRemoved.addListener((tabId, _removeInfo) => {
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.debug(`UPDATE: tab ${tabId} ${JSON.stringify(changeInfo)}`);
 
-  // event UPDATED
+  // ignore unless a page finished loading
   if (
-    (changeInfo.hasOwnProperty('status') || changeInfo.hasOwnProperty('url')) &&
-    tab.status === 'complete'
+    (!changeInfo.hasOwnProperty('status') &&
+      !changeInfo.hasOwnProperty('url')) ||
+    tab.status !== 'complete'
   ) {
-    const updated = {
-      tabId,
-      type: 'updated',
-      time: Date.now(),
-      url: tab.url,
-      title: tab.title, // title will always be loaded in this if-body
-    };
-    console.log(`${tabId} was updated`, updated);
-    sendEvent(updated);
+    return;
   }
+
+  // ignore if page is of extension
+  if (tab.url.startsWith(browser.runtime.getURL(''))) return;
+
+  // redirect to login page if ?protokolibri=login
+  if (URL.canParse(tab.url)) {
+    const url = new URL(tab.url);
+    if (url.searchParams.has('protokolibri', 'login')) {
+      url.searchParams.delete('protokolibri');
+      const loginUrl = browser.runtime.getURL('login.html') + url.search;
+      console.log(`redirecting to ${loginUrl}`);
+      browser.tabs.update(tab.id, {
+        url: loginUrl,
+      });
+      return;
+    }
+  }
+
+  // event UPDATED
+  const updated = {
+    tabId,
+    type: 'updated',
+    time: Date.now(),
+    url: tab.url,
+    title: tab.title, // title will always be loaded in this if-body
+  };
+  console.log(`${tabId} was updated`, updated);
+  sendEvent(updated);
 });
 
 const loadServerAccess = async () => {
@@ -159,3 +180,9 @@ browser.alarms.onAlarm.addListener((alarm) => {
     send('/heartbeat', { method: 'POST' }).catch(() => {});
   }
 });
+
+const devLogin = () => {
+  browser.tabs.update({
+    url: 'http://192.168.178.30/?protokolibri=login&url=http://192.168.178.30/api/&user=device&password=test',
+  });
+};
