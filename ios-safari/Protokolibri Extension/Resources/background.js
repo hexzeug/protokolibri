@@ -224,7 +224,7 @@ class PersistentBag {
   }
 
   async throwOut(amount) {
-    if (!Number.isInteger(amount) || amount > 0) return;
+    if (!Number.isInteger(amount) || amount <= 0) return;
     const bag = await this.#bag;
     if (bag.length === 0) return;
     bag.splice(0, amount);
