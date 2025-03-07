@@ -59,13 +59,27 @@
   "login_message_unauthorized": {
     "message": "Wrong user or password."
   },
+  "login_message_server_error": {
+    "message": "A server error occured. $STATUS_CODE$ $STATUS_MESSAGE$",
+    "placeholders": {
+      "status_code": {
+        "content": "$1"
+      },
+      "status_message": {
+        "content": "$2"
+      }
+    }
+  },
   "login_message_network_error": {
-    "message": "A network error occured."
+    "message": "A network error occured. $1"
   },
   "login_message_internal_error": {
-    "message": "An internal error occured."
+    "message": "An internal error occured. $1"
   },
   "login_btn_retry": {
     "message": "Retry"
+  },
+  "login_btn_close": {
+    "message": "Close tab"
   }
 }
