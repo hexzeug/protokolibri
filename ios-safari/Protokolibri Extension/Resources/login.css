@@ -13,3 +13,13 @@
     border: solid 2px;
     padding-inline: 1rem;
 }
+
+button {
+    font-size: 1.2rem;
+    display: block;
+    margin-block: 1em;
+}
+
+.hidden {
+    display: none;
+}

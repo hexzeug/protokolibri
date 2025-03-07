@@ -11,7 +11,7 @@
     "message": "Protokolibri Extension Login"
   },
   "login_confirm": {
-    "message": "If you continue you will login at this remote Protokolibri server:\nUrl: $URL$\nUser: $USER$",
+    "message": "If you continue you will login at this remote Protokolibri server:\nUrl: $URL$\nUser: $USER$\nDevice name: $DEVICE$",
     "placeholders": {
       "url": {
         "content": "$1",
@@ -20,6 +20,10 @@
       "user": {
         "content": "$2",
         "example": "device"
+      },
+      "device": {
+        "content": "$3",
+        "example": "iPad-3"
       }
     }
   },
@@ -27,7 +31,7 @@
     "message": "Login successful"
   },
   "login_message_success": {
-    "message": "Logged in at this remote server:<pre>Url: $URL$<br>User: $USER$</pre>You may close this tab now.",
+    "message": "Logged in at this remote server:<pre>Url: $URL$<br>User: $USER$<br>Device name: $DEVICE$</pre>You may close this tab now.",
     "placeholders": {
       "url": {
         "content": "$1",
@@ -36,6 +40,10 @@
       "user": {
         "content": "$2",
         "example": "device"
+      },
+      "device": {
+        "content": "$3",
+        "example": "iPad-3"
       }
     }
   },
@@ -56,5 +64,8 @@
   },
   "login_message_internal_error": {
     "message": "An internal error occured."
+  },
+  "login_btn_retry": {
+    "message": "Retry"
   }
 }

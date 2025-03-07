@@ -126,9 +126,6 @@ const loadServerAccess = async () => {
   return server;
 };
 
-let SERVER_ACCESS = loadServerAccess();
-let DEVICE_NAME = Promise.resolve('Test Device Name');
-
 browser.storage.local.onChanged.addListener(async ({ server }) => {
   if (server) {
     if (server.newValue) {
@@ -139,12 +136,14 @@ browser.storage.local.onChanged.addListener(async ({ server }) => {
   }
 });
 
+let SERVER_ACCESS = loadServerAccess();
+
 const send = async (relative_url, init) => {
   if (relative_url.startsWith('/')) relative_url = relative_url.slice(1);
 
-  const { url: server_url, user, password } = await SERVER_ACCESS;
+  const { url: server_url, user, password, device } = await SERVER_ACCESS;
   const url = new URL(server_url + relative_url);
-  url.searchParams.set('device', await DEVICE_NAME);
+  url.searchParams.set('device', device);
   return await fetch(url, {
     ...init,
     credentials: 'include',
@@ -183,6 +182,6 @@ browser.alarms.onAlarm.addListener((alarm) => {
 
 const devLogin = () => {
   browser.tabs.update({
-    url: 'http://192.168.178.30/?protokolibri=login&url=http://192.168.178.30/api/&user=device&password=test',
+    url: 'http://192.168.178.30/?protokolibri=login&url=http://192.168.178.30/api/&user=device&password=test&device=developer',
   });
 };
