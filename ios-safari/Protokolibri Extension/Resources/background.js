@@ -118,20 +118,29 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   sendEvent(updated);
 });
 
+class NoServerError extends Error {
+  name = 'NoServerError';
+
+  constructor(options) {
+    super('No server login data', options);
+  }
+}
+
 const loadServerAccess = async () => {
   const { server } = await browser.storage.local.get('server');
   if (!server) {
-    throw new TypeError('No server login data');
+    throw new NoServerError();
   }
   return server;
 };
 
-browser.storage.local.onChanged.addListener(async ({ server }) => {
+browser.storage.local.onChanged.addListener(({ server }) => {
   if (server) {
     if (server.newValue) {
       SERVER_ACCESS = Promise.resolve(server.newValue);
     } else {
-      SERVER_ACCESS = Promise.reject(new TypeError('No server login data'));
+      SERVER_ACCESS = Promise.reject(new NoServerError());
+      eventBag.throwOut(Infinity);
     }
   }
 });
@@ -167,16 +176,97 @@ const sendEvent = async (event) => {
       throw new TypeError(`API error: ${res.status} ${res.statusText}`);
     }
   } catch (e) {
-    console.error(e);
-    // todo: cache event
+    if (e.name === 'NoServerError') {
+      throw new Error('event sending failed', { cause: e });
+    } else {
+      console.warn(
+        'Server connection failed. Event will be stored locally until reconnect.'
+      );
+      await eventBag.putIn(event);
+    }
   }
 };
 
+class PersistentBag {
+  #bag;
+  #mutex = Promise.resolve();
+  key;
+
+  constructor(key) {
+    this.key = key;
+    this.#bag = browser.storage.local.get(this.key).then(
+      ({ [this.key]: bag }) => (Array.isArray(bag) ? bag : []),
+      () => []
+    );
+  }
+
+  async #write() {
+    const bag = await this.#bag;
+    const { promise: lockedMutex, resolve: unlock } = Promise.withResolvers();
+    await this.#mutex;
+    this.#mutex = lockedMutex;
+    try {
+      await browser.storage.local.set({ [this.key]: bag });
+    } finally {
+      unlock();
+    }
+  }
+
+  async getCopy() {
+    const bag = await this.#bag;
+    return [...bag];
+  }
+
+  async putIn(element) {
+    const bag = await this.#bag;
+    bag.push(element);
+    await this.#write();
+  }
+
+  async throwOut(amount) {
+    if (!Number.isInteger(amount) || amount > 0) return;
+    const bag = await this.#bag;
+    if (bag.length === 0) return;
+    bag.splice(0, amount);
+    await this.#write();
+  }
+}
+
+const eventBag = new PersistentBag('event_bag');
+
 // heartbeat
+const heartbeat = async () => {
+  // send hearbeat
+  try {
+    await send('/hearbeat', { method: 'POST' });
+  } catch (e) {
+    throw new Error('heartbeat failed', { cause: e });
+  }
+
+  // heartbeat was successfull -> check if bag contains events
+  const bag = await eventBag.getCopy();
+  if (bag.length === 0) return;
+
+  // bag contains items -> send bag
+  try {
+    await send('/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bag),
+    });
+  } catch {
+    console.warn('Event bag sending failed. Local event storage is persisted.');
+    return;
+  }
+
+  // bag was sent successful -> clear bag
+  await eventBag.throwOut(bag.length);
+};
+
 browser.alarms.create('heartbeat', { periodInMinutes: 0.5 });
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === 'heartbeat') {
-    send('/heartbeat', { method: 'POST' }).catch(() => {});
+    heartbeat();
   }
 });
 
