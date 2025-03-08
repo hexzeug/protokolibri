@@ -30,5 +30,19 @@
     "persistent": "false"
   },
 
+  "content_scripts": [
+    {
+      "js": ["google_search.js"],
+      "matches": [
+        "*://*.google.com/search",
+        "*://*.google.co.uk/search",
+        "*://*.google.de/search",
+        "*://*.google.at/search",
+        "*://*.google.ch/search"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+
   "permissions": ["tabs", "alarms", "storage"]
 }
