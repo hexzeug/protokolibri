@@ -1,0 +1,28 @@
+{
+  "name": "protokolibri-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hexzeug/protokolibri.git"
+  },
+  "author": "Siemen Zielke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hexzeug/protokolibri/issues"
+  },
+  "homepage": "https://github.com/hexzeug/protokolibri#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mariadb": "^3.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
