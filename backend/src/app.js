@@ -1,26 +1,12 @@
 import express from 'express';
+import { deviceAuth } from './auth.js';
+
 const app = express();
 
-import { createPool } from 'mariadb';
-const pool = createPool({
-  host: process.env.MARIADB_HOST,
-  user: process.env.MARIADB_USER,
-  password: process.env.MARIADB_PASSWORD,
-  database: process.env.MARIADB_DATABASE,
-  connectionLimit: 5,
-  trace: process.env.NODE_ENV === 'development',
-});
+app.use(deviceAuth);
 
 app.get('/', async (req, res) => {
-  const conn = await pool.getConnection();
-  try {
-    const data = await conn.query('SELECT CURRENT_TIMESTAMP');
-    res.send(data);
-  } catch (e) {
-    console.error(e);
-  } finally {
-    conn.end();
-  }
+  res.json(req.auth);
 });
 
 const PORT = process.env.PORT || 8080;

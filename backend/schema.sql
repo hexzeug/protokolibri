@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS device (
+  name_id VARCHAR(32) NOT NULL PRIMARY KEY , 
+  passkey_hash CHAR(60) DEFAULT NULL ,
+  last_online TIMESTAMP DEFAULT NULL
+); 
