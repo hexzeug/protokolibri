@@ -1,13 +1,22 @@
 import express from 'express';
-import { deviceAuth } from './auth.js';
+import devices from './devices.js';
 
 const app = express();
 
-app.use(deviceAuth);
+app.use(express.json());
+
+app.use('/api/v1/ingest', devices);
 
 app.get('/', async (req, res) => {
-  res.json(req.auth);
+  return res.send('Hello World!');
 });
+
+if (process.env.NODE_ENV === 'development') {
+  app.use((err, _req, res, _next) => {
+    console.error(err);
+    return res.status(500).send(err);
+  });
+}
 
 const PORT = process.env.PORT || 8080;
 const HOST = process.env.HOST || '0.0.0.0';

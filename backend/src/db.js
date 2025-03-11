@@ -1,5 +1,7 @@
 import { createPool } from 'mariadb';
 
+export const EVENT_TYPES = ['created', 'activated', 'updated', 'removed'];
+
 const pool = createPool({
   host: process.env.MARIADB_HOST,
   user: process.env.MARIADB_USER,
