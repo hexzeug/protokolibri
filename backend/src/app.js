@@ -7,8 +7,14 @@ app.use(express.json());
 
 app.use('/api/v1/ingest', devices);
 
-app.get('/', async (req, res) => {
-  return res.send('Hello World!');
+app.get('/', (_req, res) => {
+  return res.send('<a href="/login">Temp login</a>');
+});
+
+app.get('/login', (_req, res) => {
+  res.redirect(
+    'http://192.168.178.108:8080/?protokolibri=login&url=http%3A%2F%2F192.168.178.108:8080%2Fapi%2Fv1%2Fingest%2F&user=device&password=test'
+  );
 });
 
 if (process.env.NODE_ENV === 'development') {

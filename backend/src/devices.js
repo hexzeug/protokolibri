@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { deviceAuth } from './auth.js';
 import db, { EVENT_TYPES } from './db.js';
 
@@ -13,7 +14,7 @@ const validEvent = (event) =>
 
 const router = express.Router();
 
-router.use(deviceAuth);
+router.use(cors(), deviceAuth);
 
 router.post('/heartbeat', async (req, res) => {
   await db.query(
