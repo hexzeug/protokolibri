@@ -43,17 +43,14 @@ const login = async () => {
   const url = URL.parse(params.get('url'));
   const user = params.get('user');
   const password = params.get('password');
-  const device = params.get('device');
 
   // cancel if data is malformed
   if (
     url === null ||
     user === null ||
     password === null ||
-    device === null ||
     !/^[a-zA-Z][a-zA-Z0-9\-\.]*$/.test(user) ||
-    !/^[\x21-\x7e]+$/.test(password) ||
-    !/^[a-zA-Z0-9_\-\.]+$/.test(device)
+    !/^[\x21-\x7e]+$/.test(password)
   ) {
     setStatus(false, t('login_message_bad_data'));
     return;
@@ -64,7 +61,7 @@ const login = async () => {
   url.search = '';
 
   // user confirms login
-  if (!confirmed && !confirm(t('login_confirm', [url.href, user, device]))) {
+  if (!confirmed && !confirm(t('login_confirm', [url.href, user]))) {
     setStatus(false, t('login_message_canceled'), true);
     return;
   }
@@ -72,7 +69,8 @@ const login = async () => {
 
   // check login data against server
   try {
-    const res = await fetch(url, {
+    const res = await fetch(url + 'heartbeat', {
+      method: 'POST',
       credentials: 'include',
       headers: { Authorization: `Basic ${btoa(`${user}:${password}`)}` },
     });
@@ -95,7 +93,7 @@ const login = async () => {
   // store login data
   try {
     await browser.storage.local.set({
-      server: { url: url.href, user, password, device },
+      server: { url: url.href, user, password },
     });
   } catch (e) {
     setStatus(false, t('login_message_internal_error', e.toString()), true);
@@ -103,5 +101,5 @@ const login = async () => {
   }
 
   // success message
-  setStatus(true, t('login_message_success', [url.href, user, device]));
+  setStatus(true, t('login_message_success', [url.href, user]));
 };

@@ -152,7 +152,6 @@ const send = async (relative_url, init) => {
 
   const { url: server_url, user, password, device } = await SERVER_ACCESS;
   const url = new URL(server_url + relative_url);
-  url.searchParams.set('device', device);
   return await fetch(url, {
     ...init,
     credentials: 'include',
@@ -236,9 +235,9 @@ const eventBag = new PersistentBag('event_bag');
 
 // heartbeat
 const heartbeat = async () => {
-  // send hearbeat
+  // send heartbeat
   try {
-    await send('/hearbeat', { method: 'POST' });
+    await send('/heartbeat', { method: 'POST' });
   } catch (e) {
     throw new Error('heartbeat failed', { cause: e });
   }
