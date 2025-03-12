@@ -14,3 +14,9 @@ CREATE TABLE IF NOT EXISTS tab_event (
   tab_title VARCHAR(1024),
   PRIMARY KEY (device_name_id, tab_id, event_type, event_timestamp)
 ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS connection_code (
+  code CHAR(64) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (code)
+) ENGINE = InnoDB;

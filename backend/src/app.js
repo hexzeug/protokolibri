@@ -3,26 +3,26 @@ import devices from './devices.js';
 
 const app = express();
 
-app.use(express.json());
+app.set('trust proxy', 'loopback');
 
-app.use('/api/v1/ingest', devices);
+app.use(express.json(), express.urlencoded());
+
+app.use('/api/ingest', devices);
 
 app.get('/', (_req, res) => {
-  return res.send('<a href="/login">Temp login</a>');
+  return res.send(`
+<h1>Temp homepage</h1>
+<a href="/api/ingest/connect?code=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">Temp login</a>
+  `);
 });
 
-app.get('/login', (_req, res) => {
-  res.redirect(
-    'http://192.168.178.108:8080/?protokolibri=login&url=http%3A%2F%2F192.168.178.108:8080%2Fapi%2Fv1%2Fingest%2F&user=device&password=test'
-  );
-});
-
-if (process.env.NODE_ENV === 'development') {
-  app.use((err, _req, res, _next) => {
-    console.error(err);
+app.use((err, _req, res, _next) => {
+  console.error(err);
+  if (process.env.NODE_ENV === 'development') {
     return res.status(500).send(err);
-  });
-}
+  }
+  res.status(500).send('Internal Server Error');
+});
 
 const PORT = process.env.PORT || 8080;
 const HOST = process.env.HOST || '0.0.0.0';

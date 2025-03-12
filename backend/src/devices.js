@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import { deviceAuth } from './auth.js';
+import bcrypt from 'bcryptjs';
+import { connectionCodeAuth, cryptoRandomString, deviceAuth } from './auth.js';
 import db, { EVENT_TYPES } from './db.js';
 
 const validEvent = (event) =>
+  typeof event === 'object' &&
   Number.isInteger(event.tabId) &&
   EVENT_TYPES.includes(event.type) &&
   Number.isInteger(event.time) &&
@@ -14,13 +16,65 @@ const validEvent = (event) =>
 
 const router = express.Router();
 
-router.use(cors(), deviceAuth);
+router.use(cors());
+
+router.use((req, res, next) => {
+  if (req.path.startsWith('/connect')) {
+    connectionCodeAuth(req, res, next);
+  } else {
+    deviceAuth(req, res, next);
+  }
+});
+
+router.get('/connect', (_req, res) => {
+  return res.send(`
+<h1>Temp Login Page</h1>
+<form method="post">
+<input type="test" name="device" value="device" />
+<button type="submit">Login</button>
+</form>
+  `);
+});
+
+router.post('/connect', async (req, res) => {
+  const deviceName = req.body?.device;
+  if (typeof deviceName !== 'string') {
+    return res.status(400).send('Device name required');
+  }
+
+  const [deviceExists] = await db.query(
+    'SELECT 1 FROM device WHERE name_id = ? LIMIT 1',
+    [deviceName]
+  );
+  if (!deviceExists) return res.status(404).send('Device not found');
+
+  const passkey = await cryptoRandomString(32);
+  const hash = await bcrypt.hash(passkey, 10);
+  await db.query(
+    'UPDATE device SET passkey_hash = ?, last_online = NULL WHERE name_id = ?',
+    [hash, deviceName]
+  );
+
+  const apiUrl = `${req.protocol}://${req.host}${req.baseUrl}`;
+  const params = new URLSearchParams({
+    code: req.auth.code,
+    protokolibri: 'login',
+    url: apiUrl,
+    user: deviceName,
+    password: passkey,
+  });
+  // 303 See Other: method is reset to GET and body is stripped
+  return res.redirect(303, `connect/redirect?${params}`);
+});
+
+router.get('/connect/redirect', (_req, res) => {
+  return res.send('<h1>Temp extension redirect page</a>');
+});
 
 router.post('/heartbeat', async (req, res) => {
-  await db.query(
-    'UPDATE IGNORE device SET last_online = NOW(3) WHERE name_id = ?',
-    [req.auth.user]
-  );
+  await db.query('UPDATE device SET last_online = NOW(3) WHERE name_id = ?', [
+    req.auth.user,
+  ]);
 
   return res.status(201).send();
 });
