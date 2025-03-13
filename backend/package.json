@@ -23,7 +23,8 @@
     "cors": "^2.8.5",
     "express": "^5.0.1",
     "express-basic-auth": "^1.2.1",
-    "mariadb": "^3.4.0"
+    "mariadb": "^3.4.0",
+    "qrcode": "^1.5.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

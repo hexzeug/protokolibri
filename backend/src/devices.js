@@ -3,6 +3,7 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import { connectionCodeAuth, cryptoRandomString, deviceAuth } from './auth.js';
 import db, { EVENT_TYPES } from './db.js';
+import { DEVICES_PATH } from './app.js';
 
 const validEvent = (event) =>
   typeof event === 'object' &&
@@ -55,7 +56,7 @@ router.post('/connect', async (req, res) => {
     [hash, deviceName]
   );
 
-  const apiUrl = `${req.protocol}://${req.host}${req.baseUrl}`;
+  const apiUrl = `${req.protocol}://${req.host}${DEVICES_PATH}`;
   const params = new URLSearchParams({
     code: req.auth.code,
     protokolibri: 'login',

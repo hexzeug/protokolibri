@@ -4,6 +4,8 @@ import crypto from 'crypto';
 import { promisify } from 'util';
 import db from './db.js';
 
+export const MAX_CONNECTION_CODE_AGE = 30 * 60 * 1000; // 30 min
+
 const cryptoRandomBytesAsync = promisify(crypto.randomBytes);
 
 export const cryptoRandomString = async (length) =>
@@ -41,12 +43,16 @@ export const connectionCodeAuth = async (req, res, next) => {
     'SELECT code, created_at FROM connection_code WHERE code = ? LIMIT 1',
     [code]
   );
-  if (codeObj === undefined) return unauthorized;
+  if (codeObj === undefined) return unauthorized();
 
-  const createdAt = Date.parse(codeObj.created_at);
-  // todo: check if code is outdated
+  if (Date.now() - Date.parse(codeObj.created_at) > MAX_CONNECTION_CODE_AGE) {
+    await db.query('DELETE FROM connection_code WHERE code = ?', [code]);
+    return unauthorized();
+  }
 
-  req.auth = { code, createdAt };
+  req.auth = { code };
 
   return next();
 };
+
+export const userAuth = (_req, _res, next) => next();
