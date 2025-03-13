@@ -1,0 +1,60 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(name="color-scheme", content="dark light")
+        title Protokolibri - Connect Device
+    style.
+        :root {
+            font-family: sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 70ch;
+            margin-inline: auto;
+            margin-block: 2rem;
+        }
+
+        .columns {
+            display: flex;
+            gap: 1rem;
+        }
+
+        button, select  {
+            display: block;
+            width: 100%;
+            font-size: 1.2rem;
+            text-align-last: center;
+        }
+
+        #warning {
+            display: none;
+        }
+
+        :has(#connected :checked) #warning {
+            display: block;
+        }
+    body
+        .container
+            h1 Protokolibri Device Connection Service
+            p
+                b Select the this device and press connect
+            p
+                i Name missing? Add new names in the dashboard
+            form(method='post')
+                .columns
+                    select(name='device')
+                        optgroup(label='Unconnected')
+                            each device in devices[0]
+                                option(value=device.name) #{device.name}
+                            else
+                                option(disabled) None
+                        optgroup(label='Connected',id='connected')
+                            each device in devices[1]
+                                option(value=device.name) #{device.name} (connected)
+                            else
+                                option(disabled) None
+                    button(type='submit') Connect
+            p#warning WARNING! If you do this you will disconnect the previously connected device

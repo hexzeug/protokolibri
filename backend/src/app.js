@@ -1,13 +1,16 @@
 import express from 'express';
 import devices from './devices.js';
 import users from './users.js';
+import connector from './connector.js';
 
 export const DEVICES_PATH = '/api/ingest';
 export const USERS_PATH = '/api/panel';
+export const CONNECTOR_PATH = '/api/connect';
 
 const app = express();
 
 app.set('trust proxy', 'loopback');
+app.set('view engine', 'pug');
 
 app.use((req, res, next) => {
   if (process.env.NODE_ENV !== 'development' && req.protocol !== 'https') {
@@ -19,6 +22,7 @@ app.use((req, res, next) => {
 app.use(express.json(), express.urlencoded());
 app.use(DEVICES_PATH, devices);
 app.use(USERS_PATH, users);
+app.use(CONNECTOR_PATH, connector);
 
 app.get('/', (_req, res) => {
   return res.send(`

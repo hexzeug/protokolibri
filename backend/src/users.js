@@ -6,7 +6,7 @@ import {
   MAX_CONNECTION_CODE_AGE,
   userAuth,
 } from './auth.js';
-import { DEVICES_PATH } from './app.js';
+import { CONNECTOR_PATH } from './app.js';
 
 const router = express.Router();
 
@@ -31,7 +31,7 @@ router.get('/devices/code', async (req, res) => {
     await db.query('INSERT INTO connection_code (code) VALUE (?)', [code]);
   }
 
-  const url = `${req.protocol}://${req.host}${DEVICES_PATH}/connect?code=${code}`;
+  const url = `${req.protocol}://${req.host}${CONNECTOR_PATH}?code=${code}`;
   const color = req.body?.color;
   const qr = {
     svg: await qrcode.toString(url, {
