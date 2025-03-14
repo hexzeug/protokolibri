@@ -1,10 +1,10 @@
 doctype html
-html(lang="en")
+html(lang=i18n.resolvedLanguage)
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(name="color-scheme", content="dark light")
-        title Protokolibri - Connect Device
+        title #{t('app.name')} - #{t('connector.title')}
     style.
         :root {
             font-family: sans-serif;
@@ -38,23 +38,23 @@ html(lang="en")
         }
     body
         .container
-            h1 Protokolibri Device Connection Service
+            h1= t('connector.heading')
             p
-                b Select the this device and press connect
+                b= t('connector.cta')
             p
-                i Name missing? Add new names in the dashboard
+                i= t('connector.help')
             form(method='post')
                 .columns
                     select(name='device')
-                        optgroup(label='Unconnected')
+                        optgroup(label=t('connector.group.unconnected'))
                             each device in devices[0]
-                                option(value=device.name) #{device.name}
+                                option(value=device.name)= t('connector.device.unconnected', device)
                             else
                                 option(disabled) None
-                        optgroup(label='Connected',id='connected')
+                        optgroup(label=t('connector.group.connected'),id='connected')
                             each device in devices[1]
-                                option(value=device.name) #{device.name} (connected)
+                                option(value=device.name)= t('connector.device.connected', device)
                             else
                                 option(disabled) None
-                    button(type='submit') Connect
-            p#warning WARNING! If you do this you will disconnect the previously connected device
+                    button(type='submit')= t('connector.submit')
+            p#warning= t('connector.warning')

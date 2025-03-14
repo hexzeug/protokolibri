@@ -1,0 +1,24 @@
+{
+  "app.name": "Protokolibri",
+  "connector": {
+    "heading": "Protokolibri Device Connection Service",
+    "title": "Connect Device",
+    "cta": "Select this device and press connect",
+    "help": "Name missing? Add new names in the dashboard or ask you administrator",
+    "warning": "WARNING! If you do this you will disconnect the previously connected device",
+    "group": {
+      "unconnected": "Unconnected",
+      "connected": "Connected"
+    },
+    "device": {
+      "unconnected": "{{name}}",
+      "connected": "{{name}} (connected)"
+    },
+    "submit": "Connect",
+    "redirect": {
+      "title": "Redirecting...",
+      "message": "You should be redirected to the Protokolibri Browser Extension...",
+      "help": "You don't get redirected? Please check if you have installed and activated it in the settings app"
+    }
+  }
+}

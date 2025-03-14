@@ -3,6 +3,7 @@ import devices from './routes/devices.js';
 import users from './routes/users.js';
 import connector from './routes/connector.js';
 import { userAuth } from './middleware/auth.js';
+import i18n from './middleware/i18n.js';
 
 export const DEVICES_PATH = '/api/ingest';
 export const USERS_PATH = '/api/panel';
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
   }
 });
 app.use(express.json(), express.urlencoded());
+app.use(i18n);
 app.use(DEVICES_PATH, devices);
 app.use(USERS_PATH, users);
 app.use(CONNECTOR_PATH, connector);
