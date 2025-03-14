@@ -1,3 +1,9 @@
+CREATE TABLE IF NOT EXISTS user (
+  name_id VARCHAR(32) NOT NULL,
+  password_hash CHAR(60) NOT NULL,
+  PRIMARY KEY (name_id)
+) ENGINE = InnoDB;
+
 CREATE TABLE IF NOT EXISTS device (
   name_id VARCHAR(32) NOT NULL, 
   passkey_hash CHAR(60) DEFAULT NULL,

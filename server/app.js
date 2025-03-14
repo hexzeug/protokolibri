@@ -2,6 +2,7 @@ import express from 'express';
 import devices from './routes/devices.js';
 import users from './routes/users.js';
 import connector from './routes/connector.js';
+import { userAuth } from './middleware/auth.js';
 
 export const DEVICES_PATH = '/api/ingest';
 export const USERS_PATH = '/api/panel';
@@ -24,7 +25,7 @@ app.use(DEVICES_PATH, devices);
 app.use(USERS_PATH, users);
 app.use(CONNECTOR_PATH, connector);
 
-app.get('/', (_req, res) => {
+app.get('/', userAuth, (_req, res) => {
   return res.send(`
 <h1>Temp homepage</h1>
 <p><a href="javascript:void(0);">Temp login</a></p>

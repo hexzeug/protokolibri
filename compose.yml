@@ -5,6 +5,7 @@ services:
       - 8080:8080
     environment:
       NODE_ENV: development
+      ADMIN_DEFAULT_PASSWORD: password
       MARIADB_HOST: mariadb
       MARIADB_USER: user
       MARIADB_PASSWORD: test

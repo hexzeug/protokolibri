@@ -19,7 +19,9 @@ const authDevice = async (username, passkey, callback) => {
       'SELECT passkey_hash FROM device WHERE name_id = ? LIMIT 1',
       [username]
     );
-    if (user?.passkey_hash === undefined) return callback(null, false);
+    if (user === undefined || typeof user.passkey_hash !== 'string') {
+      return callback(null, false);
+    }
     const correct = await bcrypt.compare(passkey, user.passkey_hash);
     return callback(null, correct);
   } catch (e) {
@@ -55,4 +57,42 @@ export const connectionCodeAuth = async (req, res, next) => {
   return next();
 };
 
-export const userAuth = (_req, _res, next) => next();
+const initDefaultUser = async () => {
+  const defaultAdminPassword = process.env.ADMIN_DEFAULT_PASSWORD;
+  if (typeof defaultAdminPassword !== 'string') return;
+  const [{ admin }] = await db.query(
+    'SELECT COUNT(*) AS admin FROM user WHERE name_id = "admin"'
+  );
+  if (admin) return;
+  const hash = await bcrypt.hash(defaultAdminPassword, 10);
+  await db.query(
+    'INSERT INTO user (name_id, password_hash) VALUE ("admin", ?)',
+    [hash]
+  );
+};
+
+const authUser = async (username, password, callback) => {
+  try {
+    const [user] = await db.query(
+      'SELECT password_hash FROM user WHERE name_id = ? LIMIT 1',
+      [username]
+    );
+    if (user === undefined || typeof user.password_hash !== 'string') {
+      return callback(null, false);
+    }
+    const correct = await bcrypt.compare(password, user.password_hash);
+    return callback(null, correct);
+  } catch (e) {
+    return callback(e);
+  }
+};
+
+export const userAuth = basicAuth({
+  authorizer: authUser,
+  authorizeAsync: true,
+  challenge: true,
+  realm: 'protokolibri',
+  unauthorizedResponse: 'Unauthorized',
+});
+
+initDefaultUser();
