@@ -2,12 +2,15 @@ import express from 'express';
 import devices from './routes/devices.js';
 import users from './routes/users.js';
 import connector from './routes/connector.js';
+import dashboard from './routes/dashboard.js';
 import { userAuth } from './middleware/auth.js';
 import i18n from './middleware/i18n.js';
 
+export const STATIC_PATH = '/resources';
 export const DEVICES_PATH = '/api/ingest';
 export const USERS_PATH = '/api/panel';
 export const CONNECTOR_PATH = '/connect';
+export const DASHBOARD_PATH = '/dashboard';
 
 const app = express();
 
@@ -23,6 +26,8 @@ app.use((req, res, next) => {
 });
 app.use(express.json(), express.urlencoded());
 app.use(i18n);
+app.use(STATIC_PATH, express.static('public'));
+app.use(DASHBOARD_PATH, dashboard);
 app.use(DEVICES_PATH, devices);
 app.use(USERS_PATH, users);
 app.use(CONNECTOR_PATH, connector);

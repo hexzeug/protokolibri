@@ -1,0 +1,10 @@
+doctype html
+html(lang=i18n.resolvedLanguage)
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href=`${STATIC_PATH}/css/style.css`)
+    script(src=`${STATIC_PATH}/js/dashboard.js`) 
+    title= t('dashboard.title')
+  body
+    h1 Hello World!

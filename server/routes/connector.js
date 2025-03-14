@@ -14,7 +14,7 @@ router.get('/', async (_req, res) => {
   );
   const devices = [[], []];
   deviceList.forEach((d) => devices[d.connected].push(d));
-  return res.render('connector/connect', { devices });
+  return res.render('connector', { devices });
 });
 
 router.post('/', async (req, res) => {

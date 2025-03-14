@@ -1,0 +1,60 @@
+doctype html
+html(lang=i18n.resolvedLanguage)
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="color-scheme", content="dark light")
+    title #{t('app.name')} - #{t('connector.title')}
+  style.
+    :root {
+      font-family: sans-serif;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 70ch;
+      margin-inline: auto;
+      margin-block: 2rem;
+    }
+
+    .columns {
+      display: flex;
+      gap: 1rem;
+    }
+
+    button, select  {
+      display: block;
+      width: 100%;
+      font-size: 1.2rem;
+      text-align-last: center;
+    }
+
+    #warning {
+      display: none;
+    }
+
+    :has(#connected :checked) #warning {
+      display: block;
+    }
+  body
+    .container
+      h1= t('connector.heading')
+      p
+        b= t('connector.cta')
+      p
+        i= t('connector.help')
+      form(method='post')
+        .columns
+          select(name='device')
+            optgroup(label=t('connector.group.unconnected'))
+              each device in devices[0]
+                option(value=device.name)= t('connector.device.unconnected', device)
+              else
+                option(disabled) None
+            optgroup(label=t('connector.group.connected'),id='connected')
+              each device in devices[1]
+                option(value=device.name)= t('connector.device.connected', device)
+              else
+                option(disabled) None
+          button(type='submit')= t('connector.submit')
+      p#warning= t('connector.warning')
