@@ -2,9 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Start backend",
+      "label": "Start server",
       "type": "shell",
-      "command": "docker compose up --build --watch --attach backend",
+      "command": "docker compose up --build --watch --attach server",
       "group": {
         "kind": "none",
         "isDefault": true

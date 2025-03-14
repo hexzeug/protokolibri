@@ -1,12 +1,12 @@
 import express from 'express';
 import qrcode from 'qrcode';
-import db from './db.js';
+import db from '../services/db.js';
 import {
   cryptoRandomString,
   MAX_CONNECTION_CODE_AGE,
   userAuth,
-} from './auth.js';
-import { CONNECTOR_PATH } from './app.js';
+} from '../middleware/auth.js';
+import { CONNECTOR_PATH } from '../app.js';
 
 const router = express.Router();
 

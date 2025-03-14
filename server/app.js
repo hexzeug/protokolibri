@@ -1,11 +1,11 @@
 import express from 'express';
-import devices from './devices.js';
-import users from './users.js';
-import connector from './connector.js';
+import devices from './routes/devices.js';
+import users from './routes/users.js';
+import connector from './routes/connector.js';
 
 export const DEVICES_PATH = '/api/ingest';
 export const USERS_PATH = '/api/panel';
-export const CONNECTOR_PATH = '/api/connect';
+export const CONNECTOR_PATH = '/connect';
 
 const app = express();
 

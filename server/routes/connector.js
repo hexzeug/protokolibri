@@ -1,8 +1,8 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import db from './db.js';
-import { CONNECTOR_PATH, DEVICES_PATH } from './app.js';
-import { connectionCodeAuth, cryptoRandomString } from './auth.js';
+import db from '../services/db.js';
+import { CONNECTOR_PATH, DEVICES_PATH } from '../app.js';
+import { connectionCodeAuth, cryptoRandomString } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.get('/', async (_req, res) => {
   );
   const devices = [[], []];
   deviceList.forEach((d) => devices[d.connected].push(d));
-  return res.render('connect', { devices });
+  return res.render('connector/connect', { devices });
 });
 
 router.post('/', async (req, res) => {
@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/redirect', (_req, res) => {
-  return res.render('connect-redirect');
+  return res.render('connector/redirect');
 });
 
 export default router;

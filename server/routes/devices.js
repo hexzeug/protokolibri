@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { deviceAuth } from './auth.js';
-import db, { EVENT_TYPES } from './db.js';
+import { deviceAuth } from '../middleware/auth.js';
+import db, { EVENT_TYPES } from '../services/db.js';
 
 const validEvent = (event) =>
   typeof event === 'object' &&

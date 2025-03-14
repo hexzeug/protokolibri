@@ -2,7 +2,7 @@ import basicAuth from 'express-basic-auth';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { promisify } from 'util';
-import db from './db.js';
+import db from '../services/db.js';
 
 export const MAX_CONNECTION_CODE_AGE = 30 * 60 * 1000; // 30 min
 
