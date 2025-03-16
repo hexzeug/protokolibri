@@ -20,6 +20,8 @@
   "homepage": "https://github.com/hexzeug/protokolibri#readme",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "cors": "^2.8.5",
     "express": "^5.0.1",
     "express-basic-auth": "^1.2.1",

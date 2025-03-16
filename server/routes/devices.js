@@ -3,6 +3,8 @@ import cors from 'cors';
 import { deviceAuth } from '../middleware/auth.js';
 import db, { EVENT_TYPES } from '../services/db.js';
 
+export const HEARTBEAT_FREQUENCY = 30 * 1000; // 30 seconds
+
 const validEvent = (event) =>
   typeof event === 'object' &&
   Number.isInteger(event.tabId) &&

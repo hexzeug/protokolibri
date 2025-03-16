@@ -1,5 +1,64 @@
 {
   "app.name": "Protokolibri",
+  "dashboard": {
+    "title": "Dashboard",
+    "heading": "Dashboard",
+    "changePassword": "Change password",
+    "panel": {
+      "devices": "Devices",
+      "export": "Export",
+      "options": "Options",
+      "users": "Users"
+    },
+    "device": {
+      "name": "Name",
+      "lastOnline": "Last online",
+      "online": {
+        "now": "Now",
+        "never": "Never"
+      },
+      "checkAll": "Check all"
+    },
+    "export": {
+      "label": {
+        "from": "Logs from",
+        "to": "to",
+        "date": "Date",
+        "time": "Time"
+      },
+      "exportAll": "Export",
+      "exportSelected": "Export logs of selected devices"
+    },
+    "option": {
+      "pairDevices": "Pair devices",
+      "unpairSelected": "Unpair selected devices",
+      "editDeviceList": "Edit device list"
+    },
+    "user": {
+      "name": "Name",
+      "options": "Options",
+      "resetPassword": "Reset password",
+      "delete": "Delete",
+      "addUser": "Add user"
+    },
+    "password": {
+      "change": "Change password",
+      "current": "Current password",
+      "new": "New password",
+      "repeat": "Repeat password",
+      "cancel": "Cancel",
+      "submit": "Submit"
+    },
+    "pairing": {
+      "pair": "Pair devices"
+    },
+    "deviceList": {
+      "edit": "Edit device list",
+      "format": "Comma-seperated device names",
+      "cancel": "Cancel",
+      "submit": "Submit"
+    }
+  },
   "connector": {
     "heading": "Protokolibri Device Connection Service",
     "title": "Connect Device",

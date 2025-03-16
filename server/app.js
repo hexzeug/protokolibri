@@ -26,7 +26,12 @@ app.use((req, res, next) => {
 });
 app.use(express.json(), express.urlencoded());
 app.use(i18n);
-app.use(STATIC_PATH, express.static('public'));
+app.use(
+  STATIC_PATH,
+  express.static('public'),
+  express.static('node_modules/bootstrap/dist'),
+  express.static('node_modules/bootstrap-icons/font')
+);
 app.use(DASHBOARD_PATH, dashboard);
 app.use(DEVICES_PATH, devices);
 app.use(USERS_PATH, users);
