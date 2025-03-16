@@ -60,26 +60,47 @@ html(lang=lng,data-bs-theme="dark")
           .sticky-top(style="top: .25rem")
             .bg-body-tertiary.rounded.p-3.mb-2
               h6.text-body-secondary= t('dashboard.panel.export')
-              form
+              form.needs-validation(novalidate)
                 - const today = new Date(Date.now()).toISOString().split('T')[0]
                 .mb-2
                   label.form-label= t('dashboard.export.label.from')
                   .input-group
                     .form-floating
-                      input.form-control#startDate(type="date",name="startDate",value=today)
+                      input.form-control#startDate(
+                        type="date",
+                        name="startDate",
+                        value=today,
+                        required
+                      )
                       label(for="startDate")= t('dashboard.export.label.date')
                     .form-floating
-                      input.form-control#startTime(type="time",name="startTime",value="00:00")
+                      input.form-control#startTime(
+                        type="time",
+                        name="startTime",
+                        value="00:00",
+                        required
+                      )
                       label(for="startTime")= t('dashboard.export.label.time')
                 .mb-2
                   label.form-label= t('dashboard.export.label.to')
-                  .input-group
+                  .input-group.has-validation
                     .form-floating
-                      input.form-control#endDate(type="date",name="endDate",value=today)
+                      input.form-control#endDate(
+                        type="date",
+                        name="endDate",
+                        value=today,
+                        required
+                      )
                       label(for="endDate")= t('dashboard.export.label.date')
                     .form-floating
-                      input.form-control#endTime(type="time",name="endTime",value="23:59")
+                      input.form-control#endTime(
+                        type="time",
+                        name="endTime",
+                        value="23:59",
+                        required
+                      )
                       label(for="endTime")= t('dashboard.export.label.time')
+                    .invalid-feedback= t('dashboard.export.negativePeriod')
                 .btn-group.w-100
                   button.btn.btn-primary.w-100(type="submit")= t('dashboard.export.exportAll')
                     i.bi-filetype-csv.ms-2
@@ -137,20 +158,38 @@ html(lang=lng,data-bs-theme="dark")
         | &copy; 2025 Siemen Zielke
     .modal.fade#changePassword
       .modal-dialog.modal-dialog-centered
-        form.modal-content
+        form.modal-content.needs-validation(novalidate)
           .modal-header
             h5.modal-title= t('dashboard.password.change')
             button.btn-close(type="button",data-bs-dismiss="modal")
           .modal-body
             .form-floating.mb-2
-              input.form-control#oldPassword(type="password",name="oldPassword",placeholder="")
-              label(for="#oldPassword")= t('dashboard.password.current')
+              input.form-control#oldPassword(
+                type="password",
+                name="oldPassword",
+                placeholder="",
+                required
+              )
+              label(for="oldPassword")= t('dashboard.password.current')
+              .invalid-feedback= t('dashboard.password.missingCurrent')
             .form-floating.mb-2
-              input.form-control#newPassword(type="password",name="newPassword",placeholder="")
-              label(for="#newPassword")= t('dashboard.password.new')
+              input.form-control#newPassword(
+                type="password",
+                name="newPassword",
+                placeholder="",
+                pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[\\W_]).{8,}",
+                required
+              )
+              label(for="newPassword")= t('dashboard.password.new')
+              .invalid-feedback= t('dashboard.password.patternMismatch')
             .form-floating
-              input.form-control#repeatNewPassword(type="password",placeholder="")
-              label(for="#repeatNewPassword")= t('dashboard.password.repeat')
+              input.form-control#repeatPassword(
+                type="password",
+                placeholder="",
+                required
+              )
+              label(for="repeatPassword")= t('dashboard.password.repeat')
+              .invalid-feedback= t('dashboard.password.differentPassword')
           .modal-footer
             button.btn.btn-secondary(
               type="button",
@@ -166,13 +205,16 @@ html(lang=lng,data-bs-theme="dark")
         .ratio.ratio-1x1.placeholder
     .modal.fade#editDeviceList
       .modal-dialog.modal-dialog-centered.modal-lg
-        form.modal-content
+        form.modal-content.needs-validation(novalidate)
           .modal-header
             h5.modal-title= t('dashboard.deviceList.edit')
             button.btn-close(type="button",data-bs-dismiss="modal")
           .modal-body
             label.form-label(for="deviceList")= t('dashboard.deviceList.format')
-            textarea.form-control#deviceList(name="deviceList",rows=10)
+            textarea.form-control#deviceList(
+              name="deviceList",
+              rows=10
+            )
               each device, i in devices
                 if i > 0
                   | #{", "}

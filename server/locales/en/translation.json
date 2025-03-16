@@ -27,7 +27,8 @@
         "time": "Time"
       },
       "exportAll": "Export",
-      "exportSelected": "Export logs of selected devices"
+      "exportSelected": "Export logs of selected devices",
+      "negativePeriod": "Enter a positive time period."
     },
     "option": {
       "pairDevices": "Pair devices",
@@ -44,8 +45,11 @@
     "password": {
       "change": "Change password",
       "current": "Current password",
+      "missingCurrent": "Required.",
       "new": "New password",
+      "patternMismatch": "Must be at least 8 characters long and include lowercase, uppercase, numeric and special characters.",
       "repeat": "Repeat password",
+      "differentPassword": "Passwords don't match.",
       "cancel": "Cancel",
       "submit": "Submit"
     },
