@@ -32,13 +32,11 @@ router.get('/devices/code', async (req, res) => {
   }
 
   const url = `${req.protocol}://${req.host}${CONNECTOR_PATH}?code=${code}`;
-  const color = req.body?.color;
   const qr = {
     svg: await qrcode.toString(url, {
       type: 'svg',
-      color,
     }),
-    png: await qrcode.toDataURL(url, { color }),
+    png: await qrcode.toDataURL(url),
   };
 
   res.json({ code, url, qr });

@@ -1,6 +1,6 @@
 doctype html
 - const lng = i18n.resolvedLanguage
-html(lang=lng,data-bs-theme="dark")
+html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
@@ -210,7 +210,11 @@ html(lang=lng,data-bs-theme="dark")
         i.bi-link.ms-2
         button.btn-close(data-bs-dismiss="offcanvas")
       .offcanvas-body
-        .ratio.ratio-1x1.placeholder
+        p= t('dashboard.pairing.instructions')
+        .ratio.ratio-1x1.placeholder-glow.mb-2
+          .placeholder
+          #pairingQR
+        p.text-body-tertiary#pairingURL(style="font-size: 0.5em; word-break: break-all;")
     .modal.fade#editDeviceList
       .modal-dialog.modal-dialog-centered.modal-lg
         form.modal-content.needs-validation.modal-close-reset(novalidate)

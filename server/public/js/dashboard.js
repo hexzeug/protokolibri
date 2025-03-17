@@ -1,16 +1,20 @@
-// # Color theme
-const colorThemeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-const updateColorTheme = () =>
-  document.documentElement.setAttribute(
-    'data-bs-theme',
-    colorThemeMediaQuery.matches ? 'dark' : 'light'
-  );
-colorThemeMediaQuery.addEventListener('change', updateColorTheme);
-updateColorTheme();
-
 window.addEventListener(
   'DOMContentLoaded',
   () => {
+    const API = document.documentElement.getAttribute('data-api');
+
+    // # Color theme
+    const colorThemeMediaQuery = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    );
+    const updateColorTheme = () =>
+      document.documentElement.setAttribute(
+        'data-bs-theme',
+        colorThemeMediaQuery.matches ? 'dark' : 'light'
+      );
+    colorThemeMediaQuery.addEventListener('change', updateColorTheme);
+    updateColorTheme();
+
     // # Form validation
     const newPassword = document.querySelector('#newPassword');
     const repeatPassword = document.querySelector('#repeatPassword');
@@ -118,6 +122,31 @@ window.addEventListener(
       );
     });
     updateAllDevices();
+
+    // pairing
+    const pairing = document.querySelector('#pairing');
+    const pairingQR = document.querySelector('#pairingQR');
+    const pairingURL = document.querySelector('#pairingURL');
+    pairing.addEventListener('show.bs.offcanvas', async () => {
+      const res = await fetch(`${API}/devices/code`);
+      if (!res.ok) {
+        console.error('Failed loading pairing code');
+        return;
+      }
+      const code = await res.json();
+      pairingQR.innerHTML = code.qr.svg;
+      pairingURL.textContent = code.url;
+      pairingQR.setAttribute('data-code', code.code);
+    });
+    pairing.addEventListener('hidden.bs.offcanvas', async () => {
+      const code = pairingQR.getAttribute('data-code');
+      pairingQR.innerHTML = '';
+      pairingURL.textContent = '';
+      pairingQR.removeAttribute('data-code');
+      await fetch(`${API}/devices/code?code=${code}`, {
+        method: 'DELETE',
+      });
+    });
   },
   false
 );

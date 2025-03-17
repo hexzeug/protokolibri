@@ -37,29 +37,10 @@ app.use(DEVICES_PATH, devices);
 app.use(USERS_PATH, users);
 app.use(CONNECTOR_PATH, connector);
 
-app.get('/', userAuth, (_req, res) => {
+app.get('/', (_req, res) => {
   return res.send(`
 <h1>Temp homepage</h1>
-<p><a href="javascript:void(0);">Temp login</a></p>
-<img src="">
-<div style="width: 20%"></div>
-<p>
-<button onClick="load();">load connection code</button>
-<button onClick="revoke();">revoke connection code</button>
-</p>
-<script>
-var code;
-async function load() {
-    const data = await (await fetch('${USERS_PATH}/devices/code')).json();
-    code = data.code;
-    document.querySelector('a').href = data.url;
-    document.querySelector('img').src = data.qr.png;
-    document.querySelector('div').innerHTML = data.qr.svg;
-}
-async function revoke() {
-    await fetch('${USERS_PATH}/devices/code?code=' + code, {method:'DELETE'});
-}
-</script>
+<a href="${DASHBOARD_PATH}">Dashboard</a>
   `);
 });
 

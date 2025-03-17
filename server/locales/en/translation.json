@@ -54,7 +54,8 @@
       "submit": "Submit"
     },
     "pairing": {
-      "pair": "Pair devices"
+      "pair": "Pair devices",
+      "instructions": "Scan this QR code with a device. Then follow the steps on the device's screen. You can pair multiple devices with the same QR code."
     },
     "deviceList": {
       "edit": "Edit device list",
