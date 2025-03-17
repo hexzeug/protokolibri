@@ -27,6 +27,7 @@ html(lang=lng,data-bs-theme="dark")
         .col-md
           .bg-body-tertiary.rounded.p-3
             h6.text-body-secondary= t('dashboard.panel.devices')
+            form#deviceSelection
             table.table.align-middle(style="--bs-table-bg: transparent")
               thead
                 tr
@@ -38,8 +39,15 @@ html(lang=lng,data-bs-theme="dark")
                 each device in devices
                   tr
                     th(scope="row")
-                      input.form-check-input(type="checkbox")
-                    td= device.name
+                      input.form-check-input(
+                        type="checkbox",
+                        name="devices",
+                        value=device.name
+                        form="deviceSelection"
+                        id="select-" + device.name
+                      )
+                    td
+                      label(for="select-" + device.name)= device.name
                     td
                       if device.online
                         i.bi-circle-fill.text-success.me-2
@@ -158,7 +166,7 @@ html(lang=lng,data-bs-theme="dark")
         | &copy; 2025 Siemen Zielke
     .modal.fade#changePassword
       .modal-dialog.modal-dialog-centered
-        form.modal-content.needs-validation(novalidate)
+        form.modal-content.needs-validation.modal-close-reset(novalidate)
           .modal-header
             h5.modal-title= t('dashboard.password.change')
             button.btn-close(type="button",data-bs-dismiss="modal")
@@ -205,7 +213,7 @@ html(lang=lng,data-bs-theme="dark")
         .ratio.ratio-1x1.placeholder
     .modal.fade#editDeviceList
       .modal-dialog.modal-dialog-centered.modal-lg
-        form.modal-content.needs-validation(novalidate)
+        form.modal-content.needs-validation.modal-close-reset(novalidate)
           .modal-header
             h5.modal-title= t('dashboard.deviceList.edit')
             button.btn-close(type="button",data-bs-dismiss="modal")

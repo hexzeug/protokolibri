@@ -79,6 +79,45 @@ window.addEventListener(
         false
       );
     });
+
+    // reset modal forms
+    document.querySelectorAll('.modal').forEach((modal) => {
+      const forms = modal.querySelectorAll('form.modal-close-reset');
+      if (forms.length === 0) return;
+      modal.addEventListener('hidden.bs.modal', () => {
+        forms.forEach((form) => form.reset());
+      });
+    });
+
+    // select all
+    const deviceSelection = document.querySelector('#deviceSelection');
+    const deviceSelectors = Array.from(deviceSelection.elements);
+    const allDevices = document.querySelector('#allDevices');
+    const updateAllDevices = () => {
+      const selected = deviceSelectors
+        .filter((elm) => elm.type === 'checkbox')
+        .map((checkbox) => checkbox.checked);
+      if (!selected.includes(true)) {
+        allDevices.checked = false;
+        allDevices.indeterminate = false;
+      } else if (!selected.includes(false)) {
+        allDevices.checked = true;
+        allDevices.indeterminate = false;
+      } else {
+        allDevices.checked = false;
+        allDevices.indeterminate = true;
+      }
+    };
+    deviceSelectors.forEach((checkbox) => {
+      checkbox.addEventListener('change', updateAllDevices);
+    });
+    allDevices.addEventListener('change', () => {
+      if (allDevices.indeterminate) return;
+      deviceSelectors.forEach(
+        (checkbox) => (checkbox.checked = allDevices.checked)
+      );
+    });
+    updateAllDevices();
   },
   false
 );
