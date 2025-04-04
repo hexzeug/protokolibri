@@ -22,9 +22,10 @@ router.use(cors());
 router.use(deviceAuth);
 
 router.post('/heartbeat', async (req, res) => {
-  await db.query('UPDATE device SET last_online = NOW(3) WHERE name_id = ?', [
-    req.auth.user,
-  ]);
+  await db.query(
+    'UPDATE device SET last_online = CURRENT_TIMESTAMP() WHERE name_id = ?',
+    [req.auth.user]
+  );
 
   return res.status(201).send();
 });

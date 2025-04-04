@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS user (
 CREATE TABLE IF NOT EXISTS device (
   name_id VARCHAR(32) NOT NULL, 
   passkey_hash CHAR(60) DEFAULT NULL,
-  last_online TIMESTAMP(3) DEFAULT NULL,
+  last_online TIMESTAMP DEFAULT NULL,
   PRIMARY KEY (name_id)
 ) ENGINE = InnoDB;
 

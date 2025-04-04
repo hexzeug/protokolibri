@@ -7,10 +7,27 @@ import {
   userAuth,
 } from '../middleware/auth.js';
 import { CONNECTOR_PATH } from '../app.js';
+import { HEARTBEAT_FREQUENCY } from './devices.js';
 
 const router = express.Router();
 
 router.use(userAuth);
+
+router.get('/devices', async (_req, res) => {
+  const devices = await db.query(
+    'SELECT name_id AS name, last_online AS lastOnline FROM device ORDER BY name_id'
+  );
+  const lastHeartbeat = Date.now() - HEARTBEAT_FREQUENCY - 5000; // 5s tolerance
+  devices.forEach((device) => {
+    if (device.lastOnline === null) {
+      device.online = false;
+      return;
+    }
+    device.lastOnline = Date.parse(device.lastOnline);
+    device.online = device.lastOnline >= lastHeartbeat;
+  });
+  res.json(devices);
+});
 
 router.get('/devices/code', async (req, res) => {
   const [codeObj] = await db.query(

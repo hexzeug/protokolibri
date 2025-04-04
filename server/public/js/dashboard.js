@@ -147,6 +147,51 @@ window.addEventListener(
         method: 'DELETE',
       });
     });
+
+    const refreshDeviceStatuses = async () => {
+      let res;
+      try {
+        res = await fetch(`${API}/devices`);
+        if (!res.ok) {
+          console.error('device statuses request failed: ', res);
+          throw new Error();
+        }
+      } catch {
+        document
+          .querySelectorAll('[data-device-status]')
+          .forEach((deviceStatus) => {
+            deviceStatus.setAttribute('data-status', 'loading');
+          });
+        return;
+      }
+
+      const devices = await res.json();
+      devices.forEach((device) => {
+        const deviceStatus = document.querySelector(
+          `[data-device-status=${device.name}]`
+        );
+        if (deviceStatus === null) return;
+
+        if (device.lastOnline === null) {
+          deviceStatus.setAttribute('data-status', 'never');
+          return;
+        }
+
+        deviceStatus.setAttribute(
+          'data-status',
+          device.online ? 'online' : 'offline'
+        );
+
+        const deviceLastOnline = document.querySelector(
+          `[data-device-last-online=${device.name}]`
+        );
+        if (deviceLastOnline === null) return;
+        deviceLastOnline.innerHTML = new Date(
+          device.lastOnline
+        ).toLocaleString();
+      });
+    };
+    setInterval(refreshDeviceStatuses, 1000);
   },
   false
 );

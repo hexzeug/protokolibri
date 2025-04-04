@@ -7,6 +7,22 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
     link(rel="stylesheet", href=`${STATIC_PATH}/css/bootstrap.min.css`)
     link(rel="stylesheet", href=`${STATIC_PATH}/bootstrap-icons.min.css`)
     title #{t('dashboard.title')} - #{t('app.name')}
+  style.
+    [data-status] > * {
+      display: none;
+    }
+    [data-status=loading] > .loading {
+      display: unset;
+    }
+    [data-status=online] > .online {
+      display: unset;
+    }
+    [data-status=offline] > .offline {
+      display: unset;
+    }
+    [data-status=never] > .never {
+      display: unset;
+    }
   body
     header.navbar.bg-primary-subtle
       nav.container
@@ -48,14 +64,16 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                       )
                     td
                       label(for="select-" + device.name)= device.name
-                    td
-                      if device.online
+                    td(data-device-status=device.name,data-status="loading")
+                      span.loading.placeholder-wave
+                        span.placeholder.col-4.bg-secondary
+                      span.online
                         i.bi-circle-fill.text-success.me-2
                         | #{t('dashboard.device.online.now')}
-                      else if device.lastOnline
+                      span.offline
                         i.bi-circle-fill.text-danger.me-2
-                        span= Date(device.lastOnline)
-                      else
+                        span(data-device-last-online=device.name)
+                      span.never
                         i.bi-circle.text-secondary.me-2
                         | #{t('dashboard.device.online.never')}
               tfoot.table-group-divider
