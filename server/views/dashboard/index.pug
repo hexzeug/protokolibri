@@ -235,7 +235,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
         p.text-body-tertiary#pairingURL(style="font-size: 0.5em; word-break: break-all;")
     .modal.fade#editDeviceList
       .modal-dialog.modal-dialog-centered.modal-lg
-        form.modal-content.needs-validation.modal-close-reset(novalidate)
+        form.modal-content.needs-validation.modal-close-reset(action=`${USERS_PATH}/devices`,method="post",novalidate)
           .modal-header
             h5.modal-title= t('dashboard.deviceList.edit')
             button.btn-close(type="button",data-bs-dismiss="modal")

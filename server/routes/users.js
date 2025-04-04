@@ -30,6 +30,30 @@ router.get('/devices', async (_req, res) => {
   res.json(devices);
 });
 
+router.post('/devices', async (req, res) => {
+  if (req.auth.user !== 'admin') {
+    return res.status(403).send('Forbidden');
+  }
+  const devicesString = req.body.deviceList;
+  if (typeof devicesString !== 'string') {
+    return res.status(400).send('deviceList required');
+  }
+  const deviceNames = devicesString
+    .split(',')
+    .map((name) => name.trim())
+    .filter((name) => name.length);
+  await db.query('DELETE FROM device WHERE name_id NOT IN (?)', [deviceNames]);
+  await db.batch(
+    `INSERT
+      INTO device (name_id)
+      VALUES (?)
+      ON DUPLICATE KEY UPDATE name_id = name_id
+    `,
+    deviceNames
+  );
+  return res.redirect(303, DASHBOARD_PATH);
+});
+
 router.get('/devices/code', async (req, res) => {
   const [codeObj] = await db.query(
     'SELECT code, created_at FROM connection_code ORDER BY created_at DESC LIMIT 1'
