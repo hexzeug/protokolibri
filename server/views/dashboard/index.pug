@@ -184,7 +184,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
         | &copy; 2025 Siemen Zielke
     .modal.fade#changePassword
       .modal-dialog.modal-dialog-centered
-        form.modal-content.needs-validation.modal-close-reset(novalidate)
+        form.modal-content.needs-validation.modal-close-reset(action=`${USERS_PATH}/password`,method="post",novalidate)
           .modal-header
             h5.modal-title= t('dashboard.password.change')
             button.btn-close(type="button",data-bs-dismiss="modal")

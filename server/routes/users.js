@@ -1,12 +1,13 @@
 import express from 'express';
 import qrcode from 'qrcode';
+import bcrypt from 'bcryptjs';
 import db from '../services/db.js';
 import {
   cryptoRandomString,
   MAX_CONNECTION_CODE_AGE,
   userAuth,
 } from '../middleware/auth.js';
-import { CONNECTOR_PATH } from '../app.js';
+import { CONNECTOR_PATH, DASHBOARD_PATH } from '../app.js';
 import { HEARTBEAT_FREQUENCY } from './devices.js';
 
 const router = express.Router();
@@ -65,6 +66,30 @@ router.delete('/devices/code', async (req, res) => {
   }
   await db.query('DELETE FROM connection_code WHERE code = ?', [code]);
   return res.status(204).send();
+});
+
+router.post('/password', async (req, res) => {
+  const oldPassword = req.body.oldPassword;
+  const newPassword = req.body.newPassword;
+  if (typeof oldPassword !== 'string') {
+    return res.status(400).send('oldPassword required');
+  }
+  if (typeof newPassword !== 'string') {
+    return res.status(400).send('newPassword required');
+  }
+  // normal string compare is okay for old password
+  // timing attacks are very unlikely at this point because you need to be logged in anyways:
+  //    the comparison is between the password from the AUTH header and from the POST body
+  // checking the old password is only a light protection against other people using your computer (if you leave it unlocked for example)
+  if (oldPassword !== req.auth.password) {
+    return res.status(403).send('Wrong current password');
+  }
+  const hash = await bcrypt.hash(newPassword, 10);
+  await db.query('UPDATE user SET password_hash = ? WHERE name_id = ?', [
+    hash,
+    req.auth.user,
+  ]);
+  return res.redirect(303, DASHBOARD_PATH);
 });
 
 export default router;

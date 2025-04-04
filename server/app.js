@@ -3,7 +3,6 @@ import devices from './routes/devices.js';
 import users from './routes/users.js';
 import connector from './routes/connector.js';
 import dashboard from './routes/dashboard.js';
-import { userAuth } from './middleware/auth.js';
 import i18n from './middleware/i18n.js';
 
 export const STATIC_PATH = '/resources';
