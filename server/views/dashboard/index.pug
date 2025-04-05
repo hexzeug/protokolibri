@@ -167,14 +167,15 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                     tr
                       td= user.name
                       td.d-flex.flex-wrap.justify-content-end.gap-2
-                        button.btn.btn-outline-primary(
-                          disabled=user.admin
-                        )= t('dashboard.user.resetPassword')
-                          i.bi-arrow-counterclockwise.ms-1
-                        button.btn.btn-outline-primary(
-                          disabled=user.admin
-                        )= t('dashboard.user.delete')
-                          i.bi-trash.ms-1
+                        form(
+                          action=`${USERS_PATH}/users/${encodeURIComponent(user.name)}/delete`,
+                          method="post"
+                        )
+                          button.btn.btn-outline-primary(
+                            disabled=user.admin,
+                            type="submit"
+                          )= t('dashboard.user.delete')
+                            i.bi-trash.ms-1
                 tfoot.table-group-divider
                   tr
               form.row.g-2.needs-validation(

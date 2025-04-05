@@ -140,7 +140,18 @@ router.post('/users', async (req, res) => {
     validUsername,
     hash,
   ]);
-  res.redirect(303, DASHBOARD_PATH + '#usersPanel');
+  return res.redirect(303, DASHBOARD_PATH + '#usersPanel');
+});
+
+router.post('/users/:user/delete', async (req, res) => {
+  if (req.auth.user !== 'admin') {
+    return res.status(403).send('Forbidden');
+  }
+  if (req.params.user === 'admin') {
+    return res.status(400).send('Cannot delete admin');
+  }
+  await db.query('DELETE FROM user WHERE name_id = ?', [req.params.user]);
+  return res.redirect(303, DASHBOARD_PATH + '#usersPanel');
 });
 
 export default router;
