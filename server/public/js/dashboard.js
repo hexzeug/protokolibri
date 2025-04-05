@@ -168,7 +168,7 @@ window.addEventListener(
       const devices = await res.json();
       devices.forEach((device) => {
         const deviceStatus = document.querySelector(
-          `[data-device-status=${device.name}]`
+          `[data-device-status="${device.name}"]`
         );
         if (deviceStatus === null) return;
 
@@ -183,7 +183,7 @@ window.addEventListener(
         );
 
         const deviceLastOnline = document.querySelector(
-          `[data-device-last-online=${device.name}]`
+          `[data-device-last-online="${device.name}"]`
         );
         if (deviceLastOnline === null) return;
         deviceLastOnline.innerHTML = new Date(

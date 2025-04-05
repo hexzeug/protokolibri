@@ -40,7 +40,7 @@ router.post('/devices', async (req, res) => {
   }
   const deviceNames = devicesString
     .split(',')
-    .map((name) => name.trim())
+    .map((name) => name.trim().replaceAll(':', '_').slice(0, 32))
     .filter((name) => name.length);
   await db.query('DELETE FROM device WHERE name_id NOT IN (?)', [deviceNames]);
   await db.batch(
