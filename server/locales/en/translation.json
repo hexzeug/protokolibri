@@ -40,7 +40,10 @@
       "options": "Options",
       "resetPassword": "Reset password",
       "delete": "Delete",
-      "addUser": "Add user"
+      "addUser": "Add user",
+      "username": "Name",
+      "password": "Password",
+      "missingUsername": "Enter a username"
     },
     "password": {
       "change": "Change password",

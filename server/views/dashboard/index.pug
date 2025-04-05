@@ -1,5 +1,6 @@
 doctype html
 - const lng = i18n.resolvedLanguage
+- const PASSWORD_REGEX = '(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[\\W_]).{8,}'
 html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
   head
     meta(charset="UTF-8")
@@ -41,7 +42,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
       h1.mt-3.mb-2= t('dashboard.heading')
       .row.g-2
         .col-md
-          .bg-body-tertiary.rounded.p-3
+          .bg-body-tertiary.rounded.p-3#devicesPanel
             h6.text-body-secondary= t('dashboard.panel.devices')
             form#deviceSelection
             table.table.align-middle(style="--bs-table-bg: transparent")
@@ -84,7 +85,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
               label(for="allDevices")= t('dashboard.device.checkAll')
         .col-xl-4.col-md-6
           .sticky-top(style="top: .25rem")
-            .bg-body-tertiary.rounded.p-3.mb-2
+            .bg-body-tertiary.rounded.p-3.mb-2#exportPanel
               h6.text-body-secondary= t('dashboard.panel.export')
               form.needs-validation(novalidate)
                 - const today = new Date(Date.now()).toISOString().split('T')[0]
@@ -136,7 +137,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                   ul.dropdown-menu.dropdown-menu-end
                     li
                       button.dropdown-item(type="button")= t('dashboard.export.exportSelected')
-            .bg-body-tertiary.rounded.p-3
+            .bg-body-tertiary.rounded.p-3#optionsPanel
               h6.text-body-secondary= t('dashboard.panel.options')
               .vstack.gap-2
                 button.btn.btn-primary(
@@ -154,7 +155,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                   i.bi-gear.ms-2
         if user.admin
           div
-            .bg-body-tertiary.rounded.p-3
+            .bg-body-tertiary.rounded.p-3#usersPanel
               h6.text-body-secondary= t('dashboard.panel.users')
               table.table.align-middle(style="--bs-table-bg: transparent")
                 thead
@@ -176,9 +177,32 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                           i.bi-trash.ms-1
                 tfoot.table-group-divider
                   tr
-              form
-                button.btn.btn-primary(type="submit")= t('dashboard.user.addUser')
-                  i.bi-person-fill-add.ms-1
+              form.row.g-2.needs-validation(
+                action=`${USERS_PATH}/users`,
+                method="post",
+                novalidate
+              )
+                .col-xl-3.col-lg-4.col-md
+                  label(for="#newUserName")= t('dashboard.user.username')
+                  input.form-control#newUserName(
+                    type="text",
+                    name="username",
+                    required
+                  )
+                  .invalid-feedback= t('dashboard.user.missingUsername')
+                .col-xl-3.col-lg-4.col-md
+                  label(for="#newUserPassword")= t('dashboard.user.password')
+                  input.form-control#newUserPassword(
+                    type="password",
+                    name="password",
+                    pattern=PASSWORD_REGEX,
+                    required
+                  )
+                  .invalid-feedback= t('dashboard.password.patternMismatch')
+                .col-md-auto
+                  label.invisible.d-none.d-md-inline-block
+                  button.d-block.btn.btn-primary(type="submit")= t('dashboard.user.addUser')
+                    i.bi-person-fill-add.ms-1
     footer.bg-body-secondary.mt-4.p-4
       .container
         | &copy; 2025 Siemen Zielke
@@ -203,7 +227,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                 type="password",
                 name="newPassword",
                 placeholder="",
-                pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[\\W_]).{8,}",
+                pattern=PASSWORD_REGEX,
                 required
               )
               label(for="newPassword")= t('dashboard.password.new')

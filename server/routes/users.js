@@ -51,7 +51,7 @@ router.post('/devices', async (req, res) => {
     `,
     deviceNames
   );
-  return res.redirect(303, DASHBOARD_PATH);
+  return res.redirect(303, DASHBOARD_PATH + '#devicesPanel');
 });
 
 router.get('/devices/code', async (req, res) => {
@@ -114,6 +114,33 @@ router.post('/password', async (req, res) => {
     req.auth.user,
   ]);
   return res.redirect(303, DASHBOARD_PATH);
+});
+
+router.post('/users', async (req, res) => {
+  if (req.auth.user !== 'admin') {
+    return res.status(403).send('Forbidden');
+  }
+  const username = req.body.username;
+  const password = req.body.password;
+  if (typeof username !== 'string' || !username.length) {
+    return res.status(400).send('username required');
+  }
+  if (typeof password !== 'string') {
+    return res.status(400).send('password required');
+  }
+  const validUsername = username.replaceAll(/[\s:]/g, '_');
+  const users = await db.query('SELECT * FROM user WHERE name_id = ?', [
+    validUsername,
+  ]);
+  if (users.length > 0) {
+    return res.status(400).send('user alredy exists');
+  }
+  const hash = await bcrypt.hash(password, 10);
+  await db.query('INSERT INTO user (name_id, password_hash) VALUE (?, ?)', [
+    validUsername,
+    hash,
+  ]);
+  res.redirect(303, DASHBOARD_PATH + '#usersPanel');
 });
 
 export default router;
