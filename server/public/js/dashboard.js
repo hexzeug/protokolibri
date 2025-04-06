@@ -112,8 +112,19 @@ window.addEventListener(
         allDevices.indeterminate = true;
       }
     };
+    const updateDeviceSelectionInputs = () => {
+      const data = new FormData(document.querySelector('#deviceSelection'))
+        .getAll('devices')
+        .join(',');
+      document
+        .querySelectorAll('input[data-device-selection]')
+        .forEach((input) => {
+          input.value = data;
+        });
+    };
     deviceSelectors.forEach((checkbox) => {
       checkbox.addEventListener('change', updateAllDevices);
+      checkbox.addEventListener('change', updateDeviceSelectionInputs);
     });
     allDevices.addEventListener('change', () => {
       if (allDevices.indeterminate) return;
@@ -121,7 +132,9 @@ window.addEventListener(
         (checkbox) => (checkbox.checked = allDevices.checked)
       );
     });
+    allDevices.addEventListener('change', updateDeviceSelectionInputs);
     updateAllDevices();
+    updateDeviceSelectionInputs();
 
     // pairing
     const pairing = document.querySelector('#pairing');

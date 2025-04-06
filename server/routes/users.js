@@ -106,6 +106,19 @@ router.post('/password', async (req, res) => {
   return res.redirect(303, DASHBOARD_PATH);
 });
 
+router.post('/devices/unpair', async (req, res) => {
+  const devicesStr = req.body.devices;
+  if (typeof devicesStr !== 'string') {
+    return res.status(400).send('devices required');
+  }
+  const devices = devicesStr.split(',');
+  await db.query(
+    'UPDATE device SET passkey_hash = NULL, last_online = NULL WHERE name_id IN (?)',
+    [devices]
+  );
+  return res.redirect(303, DASHBOARD_PATH + '#devicesPanel');
+});
+
 router.post('/users', async (req, res) => {
   if (req.auth.user !== 'admin') {
     return res.status(403).send('Forbidden');

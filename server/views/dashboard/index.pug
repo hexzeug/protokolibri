@@ -139,13 +139,15 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                       button.dropdown-item(type="button")= t('dashboard.export.exportSelected')
             .bg-body-tertiary.rounded.p-3#optionsPanel
               h6.text-body-secondary= t('dashboard.panel.options')
+              form#unpairForm(action=`${USERS_PATH}/devices/unpair`, method="post")
+                 input(type="hidden", name="devices", data-device-selection)
               .vstack.gap-2
                 button.btn.btn-primary(
                   data-bs-toggle="offcanvas",
                   data-bs-target="#pairing"
                 )= t('dashboard.option.pairDevices')
                   i.bi-qr-code.ms-2
-                button.btn.btn-secondary= t('dashboard.option.unpairSelected')
+                button.btn.btn-secondary(form="unpairForm",type="submit")= t('dashboard.option.unpairSelected')
                   i.bi-ban.ms-2
                 button.btn.btn-secondary(
                   disabled=!user.admin,

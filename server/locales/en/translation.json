@@ -15,7 +15,7 @@
       "lastOnline": "Last online",
       "online": {
         "now": "Now",
-        "never": "Never"
+        "never": "Never (not paired)"
       },
       "checkAll": "Check all"
     },
