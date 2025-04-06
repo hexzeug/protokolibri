@@ -46,9 +46,10 @@ app.get('/', (_req, res) => {
 app.use((err, _req, res, _next) => {
   console.error(err);
   if (process.env.NODE_ENV === 'development') {
-    return res.status(500).send(err);
+    res.status(500).send(err);
+  } else {
+    res.status(500).send('Internal Server Error');
   }
-  res.status(500).send('Internal Server Error');
 });
 
 const PORT = process.env.PORT || 8080;

@@ -1,6 +1,7 @@
 import express from 'express';
 import qrcode from 'qrcode';
 import bcrypt from 'bcryptjs';
+import { promisify } from 'util';
 import db from '../services/db.js';
 import {
   cryptoRandomString,
@@ -9,6 +10,7 @@ import {
 } from '../middleware/auth.js';
 import { CONNECTOR_PATH, DASHBOARD_PATH } from '../app.js';
 import { HEARTBEAT_FREQUENCY } from './devices.js';
+import { generateCSV } from '../services/exporter.js';
 
 const router = express.Router();
 
@@ -155,6 +157,39 @@ router.post('/users/:user/delete', async (req, res) => {
   }
   await db.query('DELETE FROM user WHERE name_id = ?', [req.params.user]);
   return res.redirect(303, DASHBOARD_PATH + '#usersPanel');
+});
+
+router.use('/export', async (_req, res, next) => {
+  res.push = promisify(res.write);
+  next();
+});
+router.get('/export', async (req, res) => {
+  const startDate = req.query.startDate;
+  const startTime = req.query.startTime;
+  const endDate = req.query.endDate;
+  const endTime = req.query.endTime;
+  if (
+    typeof startDate !== 'string' ||
+    typeof startTime !== 'string' ||
+    typeof endDate !== 'string' ||
+    typeof endTime !== 'string'
+  ) {
+    return res
+      .status(400)
+      .send('startDate, startTime, endDate and endTime required');
+  }
+  const start = Date.parse(`${startDate} ${startTime}`);
+  const end = Date.parse(`${endDate} ${endTime}`);
+  if (isNaN(start) || isNaN(end) || end < start) {
+    return res.status(400).send('Bad start- and end-datetime');
+  }
+
+  res.attachment(`protokolibri-${startDate}.csv`);
+
+  for await (const buf of generateCSV(new Date(start), new Date(end))) {
+    await res.push(buf);
+  }
+  return res.end();
 });
 
 export default router;

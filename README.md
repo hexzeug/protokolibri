@@ -5,4 +5,11 @@ Kolibris is the German word for humming-bird thus the name _protocol humming-bir
 
 ## About this repository
 
+### Server
+
+#### Development
+
+Start the development server using `docker compose up`.  
+To specifiy the servers timezone, edit _compose.yml_ (default is `Europe/Berlin`).
+
 ...

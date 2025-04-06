@@ -4,6 +4,7 @@ services:
     ports:
       - 8080:8080
     environment:
+      TZ: Europe/Berlin # server timezone
       NODE_ENV: development
       ADMIN_DEFAULT_PASSWORD: password
       MARIADB_HOST: mariadb

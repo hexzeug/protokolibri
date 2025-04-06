@@ -87,7 +87,11 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
           .sticky-top(style="top: .25rem")
             .bg-body-tertiary.rounded.p-3.mb-2#exportPanel
               h6.text-body-secondary= t('dashboard.panel.export')
-              form.needs-validation(novalidate)
+              form.needs-validation(
+                action=`${USERS_PATH}/export`,
+                method="get",
+                novalidate
+              )
                 - const today = new Date(Date.now()).toISOString().split('T')[0]
                 .mb-2
                   label.form-label= t('dashboard.export.label.from')
@@ -132,6 +136,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                   button.btn.btn-primary.w-100(type="submit")= t('dashboard.export.exportAll')
                     i.bi-filetype-csv.ms-2
                   button.btn.btn-primary.dropdown-toggle.dropdown-toggle-split(
+                    type="button"
                     data-bs-toggle="dropdown"
                   )
                   ul.dropdown-menu.dropdown-menu-end
