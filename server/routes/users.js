@@ -55,23 +55,13 @@ router.post('/devices', async (req, res) => {
 });
 
 router.get('/devices/code', async (req, res) => {
-  const [codeObj] = await db.query(
-    'SELECT code, created_at FROM connection_code ORDER BY created_at DESC LIMIT 1'
-  );
-  let code = codeObj?.code;
+  const expiration = new Date(Date.now() - MAX_CONNECTION_CODE_AGE);
+  await db.query('DELETE FROM connection_code WHERE created_at < ?', [
+    expiration.toISOString(),
+  ]);
 
-  if (
-    typeof codeObj === 'object' &&
-    Date.now() - Date.parse(codeObj.created_at) > MAX_CONNECTION_CODE_AGE
-  ) {
-    await db.query('DELETE FROM connection_code WHERE code = ?', [code]);
-    code = null;
-  }
-
-  if (typeof code !== 'string') {
-    code = await cryptoRandomString(64);
-    await db.query('INSERT INTO connection_code (code) VALUE (?)', [code]);
-  }
+  const code = await cryptoRandomString(64);
+  await db.query('INSERT INTO connection_code (code) VALUE (?)', [code]);
 
   const url = `${req.protocol}://${req.host}${CONNECTOR_PATH}?code=${code}`;
   const qr = {

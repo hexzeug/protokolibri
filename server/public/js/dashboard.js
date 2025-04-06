@@ -139,13 +139,16 @@ window.addEventListener(
       pairingQR.setAttribute('data-code', code.code);
     });
     pairing.addEventListener('hidden.bs.offcanvas', async () => {
+      const FEATURE_INSTANTLY_DELETE_CODE = false;
       const code = pairingQR.getAttribute('data-code');
       pairingQR.innerHTML = '';
       pairingURL.textContent = '';
       pairingQR.removeAttribute('data-code');
-      await fetch(`${API}/devices/code?code=${code}`, {
-        method: 'DELETE',
-      });
+      if (FEATURE_INSTANTLY_DELETE_CODE) {
+        await fetch(`${API}/devices/code?code=${code}`, {
+          method: 'DELETE',
+        });
+      }
     });
 
     const refreshDeviceStatuses = async () => {

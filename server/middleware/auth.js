@@ -40,17 +40,14 @@ export const deviceAuth = basicAuth({
 export const connectionCodeAuth = async (req, res, next) => {
   const unauthorized = () => res.status(401).send('Unauthorized');
   const code = req.query.code;
-  if (code === undefined) return unauthorized();
-  const [codeObj] = await db.query(
-    'SELECT code, created_at FROM connection_code WHERE code = ? LIMIT 1',
-    [code]
-  );
-  if (codeObj === undefined) return unauthorized();
+  if (typeof code !== 'string') return unauthorized();
 
-  if (Date.now() - Date.parse(codeObj.created_at) > MAX_CONNECTION_CODE_AGE) {
-    await db.query('DELETE FROM connection_code WHERE code = ?', [code]);
-    return unauthorized();
-  }
+  const expiration = new Date(Date.now() - MAX_CONNECTION_CODE_AGE);
+  const codes = await db.query(
+    'SELECT * FROM connection_code WHERE code = ? AND created_at > ? LIMIT 1',
+    [code, expiration.toISOString()]
+  );
+  if (!codes.length) return unauthorized();
 
   req.auth = { code };
 
