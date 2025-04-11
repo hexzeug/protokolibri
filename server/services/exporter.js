@@ -1,6 +1,7 @@
 import db from './db.js';
 
 export const CSV_SEPERATOR = '\t';
+const SEARCH_INDEX_PARAM = 'protokolibri-search';
 
 const formatDate = (date) => {
   const yyyy = date.getFullYear();
@@ -14,11 +15,18 @@ const formatDate = (date) => {
   return `${yyyy}-${mm}-${dd} ${hh}:${MM}:${SS}.${sss}`;
 };
 
-export async function* generateCSV(start, end, devices) {
-  yield 'sep=' + CSV_SEPERATOR + '\n';
-  yield ['Device', 'Timestamp', 'Event Type', 'Tab ID', 'Url', 'Title'].join(
-    CSV_SEPERATOR
-  ) + '\n';
+const transformRow = (row) => {
+  row[1] = formatDate(row[1]);
+  row.push(null);
+  const url = URL.parse(row[4]);
+  if (url !== null && url.searchParams.has(SEARCH_INDEX_PARAM)) {
+    row[6] = url.searchParams.get(SEARCH_INDEX_PARAM);
+    url.searchParams.delete(SEARCH_INDEX_PARAM);
+    row[4] = url.href;
+  }
+};
+
+async function* yieldDataRows(start, end, devices) {
   let conn;
   let stream;
   try {
@@ -38,11 +46,31 @@ export async function* generateCSV(start, end, devices) {
       [start.toISOString(), end.toISOString(), devices]
     );
     for await (const row of stream) {
-      row[1] = formatDate(row[1]);
-      yield row.join(CSV_SEPERATOR) + '\n';
+      transformRow(row);
+      yield row;
     }
   } finally {
     if (stream) stream.close();
     if (conn) conn.release();
+  }
+}
+
+export async function* generateCSV(start, end, devices) {
+  yield [
+    'Device',
+    'Timestamp',
+    'Event Type',
+    'Tab ID',
+    'Url',
+    'Title',
+    'Search Result Index',
+  ].join(CSV_SEPERATOR) + '\n';
+  try {
+    for await (const row of yieldDataRows(start, end, devices)) {
+      yield row.join(CSV_SEPERATOR) + '\n';
+    }
+  } catch (e) {
+    console.error(`error while exporting ${start} ${end} ${devices}`, e);
+    yield 'Internal error';
   }
 }
