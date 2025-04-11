@@ -26,7 +26,7 @@ router.get('/devices', async (_req, res) => {
       device.online = false;
       return;
     }
-    device.lastOnline = Date.parse(device.lastOnline);
+    device.lastOnline = device.lastOnline.getTime();
     device.online = device.lastOnline >= lastHeartbeat;
   });
   res.json(devices);

@@ -42,7 +42,7 @@ router.post('/event', async (req, res) => {
       VALUE (?, ?, ?, ?, ?, ?)
       ON DUPLICATE KEY UPDATE tab_id = tab_id
     `, // effectively ignore duplicates by updating with same value
-    [deviceName, tabId, type, new Date(time).toISOString(), url, title]
+    [deviceName, tabId, type, new Date(time), url, title]
   );
 
   return res.status(201).send();
@@ -68,7 +68,7 @@ router.post('/events', async (req, res) => {
         deviceName,
         tabId,
         type,
-        new Date(time).toISOString(),
+        new Date(time),
         url,
         title,
       ])

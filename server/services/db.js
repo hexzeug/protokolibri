@@ -9,6 +9,7 @@ const pool = createPool({
   database: process.env.MARIADB_DATABASE,
   connectionLimit: 5,
   trace: process.env.NODE_ENV === 'development',
+  timezone: process.env.TZ,
 });
 
 await pool.importFile({ file: './schema.sql' });

@@ -43,7 +43,7 @@ async function* yieldDataRows(start, end, devices) {
           ORDER BY device_name_id ASC, event_timestamp ASC
         `,
       },
-      [start.toISOString(), end.toISOString(), devices]
+      [start, end, devices]
     );
     for await (const row of stream) {
       transformRow(row);
