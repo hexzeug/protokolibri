@@ -24,7 +24,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
     [data-status=never] > .never {
       display: unset;
     }
-  body
+  body.d-flex.flex-column.min-vh-100
     header.navbar.bg-primary-subtle
       nav.container
         a.navbar-brand(href="/")= t('app.name')
@@ -38,7 +38,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                 data-bs-toggle="modal",
                 data-bs-target="#changePassword"
               )= t('dashboard.changePassword')
-    .container
+    main.container.flex-fill
       h1.mt-3.mb-2= t('dashboard.heading')
       .row.g-2
         .col-md
@@ -211,9 +211,24 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                   label.invisible.d-none.d-md-inline-block
                   button.d-block.btn.btn-primary(type="submit")= t('dashboard.user.addUser')
                     i.bi-person-fill-add.ms-1
-    footer.bg-body-secondary.mt-4.p-4
+    footer.bg-body-secondary.text-body-secondary.mt-4.p-4
       .container
-        | &copy; 2025 Siemen Zielke
+        .row.align-items-end.justify-content-between.g-2
+          .col-md-auto.text-center
+            span &copy; 2025 Siemen Zielke
+          .col-md-auto.text-center
+            span #{t('app.name')} #{t('app.version')}
+          .col-md-auto
+            .hstack.gap-2.justify-content-center
+              a.link-secondary.icon-link.link-offset-1.link-underline-opacity-0.link-underline-opacity-100-hover(
+                href=t('app.source')
+              )
+                i.bi-github
+                | #{t('footer.sourceCode')}
+              .vr
+              a.link-secondary.link-offset-1.link-underline-opacity-0.link-underline-opacity-100-hover(
+                href=t('app.license')
+              )= t('footer.license')
     .modal.fade#changePassword
       .modal-dialog.modal-dialog-centered
         form.modal-content.needs-validation.modal-close-reset(action=`${USERS_PATH}/password`,method="post",novalidate)
