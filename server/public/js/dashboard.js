@@ -164,6 +164,7 @@ window.addEventListener(
       }
     });
 
+    // device statuses
     const refreshDeviceStatuses = async () => {
       let res;
       try {
@@ -182,6 +183,13 @@ window.addEventListener(
       }
 
       const devices = await res.json();
+      const dateFormatter = new Intl.DateTimeFormat(undefined, {
+        year: '2-digit',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
       devices.forEach((device) => {
         const deviceStatus = document.querySelector(
           `[data-device-status="${device.name}"]`
@@ -192,7 +200,6 @@ window.addEventListener(
           deviceStatus.setAttribute('data-status', 'never');
           return;
         }
-
         deviceStatus.setAttribute(
           'data-status',
           device.online ? 'online' : 'offline'
@@ -202,9 +209,11 @@ window.addEventListener(
           `[data-device-last-online="${device.name}"]`
         );
         if (deviceLastOnline === null) return;
-        deviceLastOnline.innerHTML = new Date(
-          device.lastOnline
-        ).toLocaleString();
+
+        const dateString = dateFormatter.format(device.lastOnline);
+        if (deviceLastOnline.innerHTML !== dateString) {
+          deviceLastOnline.innerHTML = dateString;
+        }
       });
     };
     setInterval(refreshDeviceStatuses, 1000);
