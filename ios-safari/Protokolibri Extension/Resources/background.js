@@ -237,7 +237,10 @@ const eventBag = new PersistentBag('event_bag');
 const heartbeat = async () => {
   // send heartbeat
   try {
-    await send('/heartbeat', { method: 'POST' });
+    const res = await send('/heartbeat', { method: 'POST' });
+    if (!res.ok) {
+      throw new Error('heartbeat failed');
+    }
   } catch (e) {
     throw new Error('heartbeat failed', { cause: e });
   }
@@ -248,11 +251,14 @@ const heartbeat = async () => {
 
   // bag contains items -> send bag
   try {
-    await send('/events', {
+    const res = await send('/events', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bag),
     });
+    if (!res.ok) {
+      throw new Error('event bag sending failed');
+    }
   } catch {
     console.warn('Event bag sending failed. Local event storage is persisted.');
     return;
