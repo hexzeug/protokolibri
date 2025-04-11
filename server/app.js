@@ -1,4 +1,5 @@
 import express from 'express';
+import helmet from 'helmet';
 import devices from './routes/devices.js';
 import users from './routes/users.js';
 import connector from './routes/connector.js';
@@ -11,20 +12,44 @@ export const USERS_PATH = '/api/panel';
 export const CONNECTOR_PATH = '/connect';
 export const DASHBOARD_PATH = '/dashboard';
 
+const PORT = process.env.PORT || 8080;
+const HOST = process.env.HOST || '0.0.0.0';
+
 const app = express();
 
 app.set('trust proxy', 'loopback');
 app.set('view engine', 'pug');
 
-app.use((req, res, next) => {
-  if (process.env.NODE_ENV !== 'development' && req.protocol !== 'https') {
-    res.status(400).send('HTTP is not allowed. Use HTTPS');
-  } else {
-    next();
-  }
-});
+// security middleware
+if (process.env.NODE_ENV !== 'development') {
+  app.use(helmet());
+  app.use((req, res, next) => {
+    if (req.protocol !== 'https') {
+      res.redirect(301, `https://${req.host}${req.originalUrl}`);
+    } else {
+      next();
+    }
+  });
+} else {
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          upgradeInsecureRequests: null,
+        },
+      },
+      strictTransportSecurity: false,
+    })
+  );
+}
+
+// request parsing middleware
 app.use(express.json(), express.urlencoded());
+
+// internationalization middleware
 app.use(i18n);
+
+// routes
 app.use(
   STATIC_PATH,
   express.static('public'),
@@ -43,6 +68,10 @@ app.get('/', (_req, res) => {
   `);
 });
 
+// error handling middleware
+app.use((_req, res) => {
+  res.status(404).send('Not Found');
+});
 app.use((err, _req, res, _next) => {
   console.error(err);
   if (process.env.NODE_ENV === 'development') {
@@ -52,9 +81,13 @@ app.use((err, _req, res, _next) => {
   }
 });
 
-const PORT = process.env.PORT || 8080;
-const HOST = process.env.HOST || '0.0.0.0';
-
-app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log(`started server at ${HOST}:${PORT}`);
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: stopping server');
+  server.close(() => {
+    console.log('server closed');
+  });
 });
