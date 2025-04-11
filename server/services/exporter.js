@@ -14,7 +14,7 @@ const formatDate = (date) => {
   return `${yyyy}-${mm}-${dd} ${hh}:${MM}:${SS}.${sss}`;
 };
 
-export async function* generateCSV(start, end) {
+export async function* generateCSV(start, end, devices) {
   yield 'sep=' + CSV_SEPERATOR + '\n';
   yield ['Device', 'Timestamp', 'Event Type', 'Tab ID', 'Url', 'Title'].join(
     CSV_SEPERATOR
@@ -29,11 +29,13 @@ export async function* generateCSV(start, end) {
         sql: `
           SELECT device_name_id, event_timestamp, event_type, tab_id, tab_url, tab_title
           FROM tab_event
-          WHERE event_timestamp BETWEEN ? AND ?
+          WHERE event_timestamp BETWEEN ? AND ? ${
+            devices ? 'AND device_name_id IN (?)' : ''
+          }
           ORDER BY device_name_id ASC, event_timestamp ASC
         `,
       },
-      [start.toISOString(), end.toISOString()]
+      [start.toISOString(), end.toISOString(), devices]
     );
     for await (const row of stream) {
       row[1] = formatDate(row[1]);

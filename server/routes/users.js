@@ -168,6 +168,7 @@ router.get('/export', async (req, res) => {
   const startTime = req.query.startTime;
   const endDate = req.query.endDate;
   const endTime = req.query.endTime;
+  const devicesStr = req.query.devices;
   if (
     typeof startDate !== 'string' ||
     typeof startTime !== 'string' ||
@@ -183,10 +184,15 @@ router.get('/export', async (req, res) => {
   if (isNaN(start) || isNaN(end) || end < start) {
     return res.status(400).send('Bad start- and end-datetime');
   }
+  const devices = typeof devicesStr === 'string' ? devicesStr.split(',') : null;
 
   res.attachment(`protokolibri-${startDate}.csv`);
 
-  for await (const buf of generateCSV(new Date(start), new Date(end))) {
+  for await (const buf of generateCSV(
+    new Date(start),
+    new Date(end),
+    devices
+  )) {
     await res.push(buf);
   }
   return res.end();

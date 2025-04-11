@@ -141,7 +141,7 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                   )
                   ul.dropdown-menu.dropdown-menu-end
                     li
-                      button.dropdown-item(type="button")= t('dashboard.export.exportSelected')
+                      button.dropdown-item(type="submit",name="devices",data-device-selection)= t('dashboard.export.exportSelected')
             .bg-body-tertiary.rounded.p-3#optionsPanel
               h6.text-body-secondary= t('dashboard.panel.options')
               form#unpairForm(action=`${USERS_PATH}/devices/unpair`, method="post")

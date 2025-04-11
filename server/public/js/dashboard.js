@@ -116,11 +116,9 @@ window.addEventListener(
       const data = new FormData(document.querySelector('#deviceSelection'))
         .getAll('devices')
         .join(',');
-      document
-        .querySelectorAll('input[data-device-selection]')
-        .forEach((input) => {
-          input.value = data;
-        });
+      document.querySelectorAll('[data-device-selection]').forEach((input) => {
+        input.value = data;
+      });
     };
     deviceSelectors.forEach((checkbox) => {
       checkbox.addEventListener('change', updateAllDevices);
