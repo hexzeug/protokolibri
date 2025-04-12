@@ -5,13 +5,13 @@ window.addEventListener('DOMContentLoaded', () => {
       .find((page) => !isNaN(page)) ?? 1;
 
   const refreshTrackingIndex = () => {
-    document.querySelectorAll('.g:not(.g .g)').forEach((g, i) => {
-      g.querySelectorAll('a').forEach((a) => {
-        const url = URL.parse(a.href);
-        if (url === null) return;
-        url.searchParams.set('protokolibri-search', `${page}-${i + 1}`);
-        a.href = url.href;
-      });
+    console.log('reindexing result links');
+    document.querySelectorAll('a:has(h3)').forEach((a, i) => {
+      const url = URL.parse(a.href);
+      if (url === null) return;
+      url.searchParams.set('protokolibri-search', `${page}-${i + 1}`);
+      a.href = url.href;
+      console.log(url.href, a);
     });
   };
 
@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
       for (const node of changes) {
         if (
           node.nodeType === Node.ELEMENT_NODE &&
-          node.matches('* .g:not(.g .g)')
+          node.matches('h3, :has(h3)')
         ) {
           refreshIndex = true;
           break;
