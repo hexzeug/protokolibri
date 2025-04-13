@@ -73,5 +73,30 @@
   },
   "login_btn_close": {
     "message": "Close tab"
+  },
+  "popup_unpaired": {
+    "message": "Not connected to any Protokolibri server."
+  },
+  "popup_data": {
+    "message": "Saved login data:<pre>Url: $URL$<br>Device name: $DEVICE$</pre>",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "device": {
+        "content": "$2",
+        "example": "iPad-3"
+      }
+    }
+  },
+  "popup_status": {
+    "message": "Status: $STATUS$",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "Unauthorized"
+      }
+    }
   }
 }
