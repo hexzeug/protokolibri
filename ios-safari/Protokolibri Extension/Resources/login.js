@@ -1,6 +1,7 @@
 'use strict';
 
 const t = (...args) => browser.i18n.getMessage(...args);
+const textEncoder = new TextEncoder();
 
 window.addEventListener('load', () => {
   document.documentElement.lang = t('@@ui_locale');
@@ -49,8 +50,9 @@ const login = async () => {
     url === null ||
     user === null ||
     password === null ||
-    !/^[a-zA-Z][a-zA-Z0-9\-\.]*$/.test(user) ||
-    !/^[\x21-\x7e]+$/.test(password)
+    user.length === 0 ||
+    user.includes(':') ||
+    password.length === 0
   ) {
     setStatus(false, t('login_message_bad_data'));
     return;
@@ -72,7 +74,11 @@ const login = async () => {
     const res = await fetch(url + 'heartbeat', {
       method: 'POST',
       credentials: 'include',
-      headers: { Authorization: `Basic ${btoa(`${user}:${password}`)}` },
+      headers: {
+        Authorization: `Basic ${textEncoder
+          .encode(`${user}:${password}`)
+          .toBase64()}`,
+      },
     });
     if (res.status === 401) {
       setStatus(false, t('login_message_unauthorized'));

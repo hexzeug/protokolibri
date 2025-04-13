@@ -112,7 +112,7 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     type: 'updated',
     time: Date.now(),
     url: tab.url,
-    title: tab.title, // title will always be loaded in this if-body
+    title: tab.title, // title will always be loaded after these guard-if-clauses
   };
   console.log(`${tabId} was updated`, updated);
   sendEvent(updated);
@@ -146,18 +146,21 @@ browser.storage.local.onChanged.addListener(({ server }) => {
 });
 
 let SERVER_ACCESS = loadServerAccess();
+const textEncoder = new TextEncoder();
 
 const send = async (relative_url, init) => {
   if (relative_url.startsWith('/')) relative_url = relative_url.slice(1);
 
-  const { url: server_url, user, password, device } = await SERVER_ACCESS;
+  const { url: server_url, user, password } = await SERVER_ACCESS;
   const url = new URL(server_url + relative_url);
   return await fetch(url, {
     ...init,
     credentials: 'include',
     headers: {
       ...init.headers,
-      Authorization: `Basic ${btoa(`${user}:${password}`)}`,
+      Authorization: `Basic ${textEncoder
+        .encode(`${user}:${password}`)
+        .toBase64()}`,
     },
   });
 };
@@ -179,7 +182,8 @@ const sendEvent = async (event) => {
       throw new Error('event sending failed', { cause: e });
     } else {
       console.warn(
-        'Server connection failed. Event will be stored locally until reconnect.'
+        'Server connection failed. Event will be stored locally until reconnect.',
+        e
       );
       await eventBag.putIn(event);
     }
@@ -239,7 +243,7 @@ const heartbeat = async () => {
   try {
     const res = await send('/heartbeat', { method: 'POST' });
     if (!res.ok) {
-      throw new Error('heartbeat failed');
+      throw new Error('heartbeat response not ok');
     }
   } catch (e) {
     throw new Error('heartbeat failed', { cause: e });
@@ -274,9 +278,6 @@ browser.alarms.onAlarm.addListener((alarm) => {
     heartbeat();
   }
 });
-
-const devLogin = () => {
-  browser.tabs.update({
-    url: 'http://192.168.178.30/?protokolibri=login&url=http://192.168.178.30/api/&user=device&password=test&device=developer',
-  });
-};
+try {
+  heartbeat();
+} catch {} // ignore
