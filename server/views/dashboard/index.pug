@@ -5,6 +5,8 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="icon", href=`${STATIC_PATH}/img/favicon.ico`, type="image/x-icon")
+    link(rel="icon", href=`${STATIC_PATH}/img/favicon.svg`, type="image/svg+xml")
     link(rel="stylesheet", href=`${STATIC_PATH}/css/bootstrap.min.css`)
     link(rel="stylesheet", href=`${STATIC_PATH}/bootstrap-icons.min.css`)
     title #{t('dashboard.title')} - #{t('app.name')}
@@ -27,7 +29,9 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
   body.d-flex.flex-column.min-vh-100
     header.navbar.bg-primary-subtle
       nav.container
-        a.navbar-brand(href="/")= t('app.name')
+        a.navbar-brand.d-flex.align-items-center(href="/")
+          img.d-inline-block.me-1(src=`${STATIC_PATH}/img/icon.png`, alt="Protokolibri Icon", width="48", height="48")
+          | #{t('app.name')}
         .dropdown
           button.btn.dropdown-toggle(data-bs-toggle="dropdown")
             i.bi-person-circle.me-1
