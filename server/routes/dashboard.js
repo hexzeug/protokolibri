@@ -1,6 +1,5 @@
 import express from 'express';
 import db from '../services/db.js';
-import { STATIC_PATH, USERS_PATH } from '../app.js';
 import { userAuth } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -19,7 +18,7 @@ router.get('/', async (req, res) => {
     name: req.auth.user,
     admin: req.auth.user === 'admin',
   };
-  res.render('dashboard', { STATIC_PATH, USERS_PATH, user, devices, users });
+  res.render('dashboard', { user, devices, users });
 });
 
 export default router;

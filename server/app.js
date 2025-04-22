@@ -52,6 +52,11 @@ app.use(express.json(), express.urlencoded());
 app.use(i18n);
 app.use(async (_req, res, next) => {
   res.locals.pkg = pkg;
+  res.locals.STATIC_PATH = STATIC_PATH;
+  res.locals.DEVICES_PATH = DEVICES_PATH;
+  res.locals.USERS_PATH = USERS_PATH;
+  res.locals.CONNECTOR_PATH = CONNECTOR_PATH;
+  res.locals.DASHBOARD_PATH = DASHBOARD_PATH;
   next();
 });
 

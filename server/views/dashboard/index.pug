@@ -1,7 +1,6 @@
 doctype html
-- const lng = i18n.resolvedLanguage
 - const PASSWORD_REGEX = '(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[\\W_]).{8,}'
-html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
+html(lang=i18n.resolvedLanguage,data-bs-theme="dark",data-api=USERS_PATH)
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
@@ -97,6 +96,9 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
                 novalidate
               )
                 - const today = new Date(Date.now()).toISOString().split('T')[0]
+                //-
+                  yes, this is the current date in UTC which may be off depending on the timezone
+                  but it is only used for the default selected date so it is not very important
                 .mb-2
                   label.form-label= t('dashboard.export.label.from')
                   .input-group

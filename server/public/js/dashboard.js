@@ -1,5 +1,7 @@
 'use strict';
 
+const FEATURE_DELETE_CODE_ON_CLOSE = false;
+
 window.addEventListener(
   'DOMContentLoaded',
   () => {
@@ -152,12 +154,11 @@ window.addEventListener(
       pairingQR.setAttribute('data-code', code.code);
     });
     pairing.addEventListener('hidden.bs.offcanvas', async () => {
-      const FEATURE_INSTANTLY_DELETE_CODE = false;
       const code = pairingQR.getAttribute('data-code');
       pairingQR.innerHTML = '';
       pairingURL.textContent = '';
       pairingQR.removeAttribute('data-code');
-      if (FEATURE_INSTANTLY_DELETE_CODE) {
+      if (FEATURE_DELETE_CODE_ON_CLOSE) {
         await fetch(`${API}/devices/code?code=${code}`, {
           method: 'DELETE',
         });

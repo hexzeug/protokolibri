@@ -45,7 +45,7 @@ export const connectionCodeAuth = async (req, res, next) => {
   const expiration = new Date(Date.now() - MAX_CONNECTION_CODE_AGE);
   const codes = await db.query(
     'SELECT * FROM connection_code WHERE code = ? AND created_at > ? LIMIT 1',
-    [code, expiration.toISOString()]
+    [code, expiration]
   );
   if (!codes.length) return unauthorized();
 

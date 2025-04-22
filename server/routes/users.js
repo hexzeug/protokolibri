@@ -59,7 +59,7 @@ router.post('/devices', async (req, res) => {
 router.get('/devices/code', async (req, res) => {
   const expiration = new Date(Date.now() - MAX_CONNECTION_CODE_AGE);
   await db.query('DELETE FROM connection_code WHERE created_at < ?', [
-    expiration.toISOString(),
+    expiration,
   ]);
 
   const code = await cryptoRandomString(64);
@@ -100,6 +100,10 @@ router.post('/password', async (req, res) => {
   if (oldPassword !== req.auth.password) {
     return res.status(403).send('Wrong current password');
   }
+  // also note that the check for secure passwords (min 8 chars etc.) is only done client side
+  //    because it is only a protection against lazy users
+  // if someone knows how to change their password without using the form they
+  //    know what they are doing anyways so they won't set an insecure password
   const hash = await bcrypt.hash(newPassword, 10);
   await db.query('UPDATE user SET password_hash = ? WHERE name_id = ?', [
     hash,
@@ -133,7 +137,7 @@ router.post('/users', async (req, res) => {
   if (typeof password !== 'string') {
     return res.status(400).send('password required');
   }
-  const validUsername = username.replaceAll(/[\s:]/g, '_');
+  const validUsername = username.trim().replaceAll(':', '_').slice(0, 32);
   const users = await db.query('SELECT * FROM user WHERE name_id = ?', [
     validUsername,
   ]);
