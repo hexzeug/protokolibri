@@ -1,0 +1,102 @@
+{
+  "extension_name": {
+    "message": "Protokolibri-Erweiterung",
+    "description": "The display name for the extension."
+  },
+  "extension_description": {
+    "message": "Interne Erweiterung zur Datenerhebung.",
+    "description": "Description of what the extension does."
+  },
+  "login_page_title": {
+    "message": "Protokolibri-Erweiterung Anmeldung"
+  },
+  "login_confirm": {
+    "message": "Wenn Sie fortfahren melden Sie sich bei folgendem Protokolibriserver an:\nUrl: $URL$\nGerät: $DEVICE$",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "device": {
+        "content": "$2",
+        "example": "iPad-3"
+      }
+    }
+  },
+  "login_status_success": {
+    "message": "Anmeldung erfolgreich"
+  },
+  "login_message_success": {
+    "message": "Angemeldet bei diesem Server:<pre>Url: $URL$<br>Gerätename: $DEVICE$</pre>Sie können diesen Tab jetzt schließen.",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "device": {
+        "content": "$2",
+        "example": "iPad-3"
+      }
+    }
+  },
+  "login_status_failed": {
+    "message": "Anmeldung fehlgeschlagen"
+  },
+  "login_message_bad_data": {
+    "message": "Anmeldedaten konnten nicht emfangen werden. Bitte überprüfen Sie, ob Sie den Anweisungen auf ihrem Protokolibriserver folgen."
+  },
+  "login_message_canceled": {
+    "message": "Sie haben die Anmeldung abgebrochen."
+  },
+  "login_message_unauthorized": {
+    "message": "Falscher Benutzer oder falsches Passwort."
+  },
+  "login_message_server_error": {
+    "message": "Ein Serverfehler ist aufgetreten. $STATUS_CODE$ $STATUS_MESSAGE$",
+    "placeholders": {
+      "status_code": {
+        "content": "$1"
+      },
+      "status_message": {
+        "content": "$2"
+      }
+    }
+  },
+  "login_message_network_error": {
+    "message": "Ein Netzwerkfehler ist aufgetreten. $1"
+  },
+  "login_message_internal_error": {
+    "message": "Ein interner Fehler ist aufgetreten. $1"
+  },
+  "login_btn_retry": {
+    "message": "Erneut versuchen"
+  },
+  "login_btn_close": {
+    "message": "Tab schließen"
+  },
+  "popup_unpaired": {
+    "message": "Mit keinem Protokolibriserver verbunden."
+  },
+  "popup_data": {
+    "message": "Gespeicherte Anmeldedaten:<pre>Url: $URL$<br>Gerätename: $DEVICE$</pre>",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "device": {
+        "content": "$2",
+        "example": "iPad-3"
+      }
+    }
+  },
+  "popup_status": {
+    "message": "Status: $STATUS$",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "403 Unauthorized"
+      }
+    }
+  }
+}

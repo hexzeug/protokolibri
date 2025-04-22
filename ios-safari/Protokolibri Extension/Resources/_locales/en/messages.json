@@ -1,0 +1,102 @@
+{
+  "extension_name": {
+    "message": "Protokolibri Extension",
+    "description": "The display name for the extension."
+  },
+  "extension_description": {
+    "message": "Internal extension for collecting data.",
+    "description": "Description of what the extension does."
+  },
+  "login_page_title": {
+    "message": "Protokolibri Extension Login"
+  },
+  "login_confirm": {
+    "message": "If you continue you will login at this remote Protokolibri server:\nUrl: $URL$\nDevice: $DEVICE$",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "device": {
+        "content": "$2",
+        "example": "iPad-3"
+      }
+    }
+  },
+  "login_status_success": {
+    "message": "Login successful"
+  },
+  "login_message_success": {
+    "message": "Logged in at this remote server:<pre>Url: $URL$<br>Device name: $DEVICE$</pre>You may close this tab now.",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "device": {
+        "content": "$2",
+        "example": "iPad-3"
+      }
+    }
+  },
+  "login_status_failed": {
+    "message": "Login failed"
+  },
+  "login_message_bad_data": {
+    "message": "Could not receive login data. Please make sure to follow the instructions on your Protokolibri server."
+  },
+  "login_message_canceled": {
+    "message": "You canceled the login."
+  },
+  "login_message_unauthorized": {
+    "message": "Wrong user or password."
+  },
+  "login_message_server_error": {
+    "message": "A server error occured. $STATUS_CODE$ $STATUS_MESSAGE$",
+    "placeholders": {
+      "status_code": {
+        "content": "$1"
+      },
+      "status_message": {
+        "content": "$2"
+      }
+    }
+  },
+  "login_message_network_error": {
+    "message": "A network error occured. $1"
+  },
+  "login_message_internal_error": {
+    "message": "An internal error occured. $1"
+  },
+  "login_btn_retry": {
+    "message": "Retry"
+  },
+  "login_btn_close": {
+    "message": "Close tab"
+  },
+  "popup_unpaired": {
+    "message": "Not connected to any Protokolibri server."
+  },
+  "popup_data": {
+    "message": "Saved login data:<pre>Url: $URL$<br>Device name: $DEVICE$</pre>",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "https://protokolibri.example.com"
+      },
+      "device": {
+        "content": "$2",
+        "example": "iPad-3"
+      }
+    }
+  },
+  "popup_status": {
+    "message": "Status: $STATUS$",
+    "placeholders": {
+      "status": {
+        "content": "$1",
+        "example": "403 Unauthorized"
+      }
+    }
+  }
+}
