@@ -1,0 +1,22 @@
+[Unit]
+Description=Protokolibri Web Server
+After=network.target
+
+[Service]
+Type=exec
+WorkingDirectory=%h/protokolibri/server
+
+EnvironmentFile=%h/protokolibri.env
+Environment=NODE_ENV=production
+Environment=NODE_VERSION=node
+ExecStart=%h/.nvm/nvm-exec node app.js
+
+Restart=always
+StartLimitInterval=200
+StartLimitBurst=3
+
+LimitNOFILE=infinity
+LimitCORE=infinity
+
+[Install]
+WantedBy=default.target
