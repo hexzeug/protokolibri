@@ -10,7 +10,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hexzeug/protokolibri.git"
+    "url": "git+https://github.com/hexzeug/protokolibri.git",
+    "directory": "server"
   },
   "author": "Siemen Zielke",
   "license": "MIT",

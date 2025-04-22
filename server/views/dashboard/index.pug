@@ -219,19 +219,21 @@ html(lang=lng,data-bs-theme="dark",data-api=USERS_PATH)
       .container
         .row.align-items-end.justify-content-between.g-2
           .col-md-auto.text-center
-            span &copy; 2025 Siemen Zielke
+            span &copy; 2025 #{pkg.author}
           .col-md-auto.text-center
-            span #{t('app.name')} #{t('app.version')}
+            span #{t('app.name')} v#{pkg.version}
           .col-md-auto
             .hstack.gap-2.justify-content-center
               a.link-secondary.icon-link.link-offset-1.link-underline-opacity-0.link-underline-opacity-100-hover(
-                href=t('app.source')
+                href=t('footer.sourceCode.url')
+                target="_blank"
               )
                 i.bi-github
                 | #{t('footer.sourceCode')}
               .vr
               a.link-secondary.link-offset-1.link-underline-opacity-0.link-underline-opacity-100-hover(
-                href=t('app.license')
+                href=t('footer.license.url')
+                target="_blank"
               )= t('footer.license')
     .modal.fade#changePassword
       .modal-dialog.modal-dialog-centered

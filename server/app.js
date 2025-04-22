@@ -5,6 +5,7 @@ import users from './routes/users.js';
 import connector from './routes/connector.js';
 import dashboard from './routes/dashboard.js';
 import i18n from './middleware/i18n.js';
+import pkg from './package.json' with { type: 'json' };
 
 export const STATIC_PATH = '/resources';
 export const DEVICES_PATH = '/api/ingest';
@@ -12,8 +13,9 @@ export const USERS_PATH = '/api/panel';
 export const CONNECTOR_PATH = '/connect';
 export const DASHBOARD_PATH = '/dashboard';
 
-const PORT = process.env.PORT || 8080;
-const HOST = process.env.HOST || '0.0.0.0';
+const PORT = process.env.PORT || '8080';
+const HOSTNAME = process.env.HOSTNAME || '0.0.0.0';
+export const PUBLIC_HOST = process.env.PUBLIC_HOST || `${HOSTNAME}:${PORT}`;
 
 const app = express();
 
@@ -25,7 +27,7 @@ if (process.env.NODE_ENV !== 'development') {
   app.use(helmet());
   app.use((req, res, next) => {
     if (req.protocol !== 'https') {
-      res.redirect(301, `https://${req.host}${req.originalUrl}`);
+      res.redirect(301, `https://${PUBLIC_HOST}${req.originalUrl}`);
     } else {
       next();
     }
@@ -46,8 +48,12 @@ if (process.env.NODE_ENV !== 'development') {
 // request parsing middleware
 app.use(express.json(), express.urlencoded());
 
-// internationalization middleware
+// tools middleware
 app.use(i18n);
+app.use(async (_req, res, next) => {
+  res.locals.pkg = pkg;
+  next();
+});
 
 // routes
 app.use(
@@ -61,32 +67,29 @@ app.use(DEVICES_PATH, devices);
 app.use(USERS_PATH, users);
 app.use(CONNECTOR_PATH, connector);
 
-app.get('/', (_req, res) => {
-  return res.send(`
-<h1>Temp homepage</h1>
-<a href="${DASHBOARD_PATH}">Dashboard</a>
-  `);
-});
-
 // error handling middleware
 app.use((_req, res) => {
   res.status(404).send('Not Found');
 });
-app.use((err, _req, res, _next) => {
-  console.error(err);
-  if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
+  app.use((err, _req, res, _next) => {
+    console.error(err);
     res.status(500).send(err);
-  } else {
+  });
+} else {
+  app.use((err, _req, res, _next) => {
+    console.error(err);
     res.status(500).send('Internal Server Error');
-  }
-});
+  });
+}
 
-const server = app.listen(PORT, HOST, () => {
-  console.log(`started server at ${HOST}:${PORT}`);
+console.log('starting server...');
+const server = app.listen(PORT, HOSTNAME, () => {
+  console.log(`started server at ${HOSTNAME}:${PORT}`);
 });
 
 process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: stopping server');
+  console.log('SIGTERM signal received: stopping server...');
   server.close(() => {
     console.log('server closed');
   });

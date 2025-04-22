@@ -8,7 +8,7 @@ import {
   MAX_CONNECTION_CODE_AGE,
   userAuth,
 } from '../middleware/auth.js';
-import { CONNECTOR_PATH, DASHBOARD_PATH } from '../app.js';
+import { CONNECTOR_PATH, DASHBOARD_PATH, PUBLIC_HOST } from '../app.js';
 import { HEARTBEAT_FREQUENCY } from './devices.js';
 import { generateCSV } from '../services/exporter.js';
 
@@ -65,7 +65,7 @@ router.get('/devices/code', async (req, res) => {
   const code = await cryptoRandomString(64);
   await db.query('INSERT INTO connection_code (code) VALUE (?)', [code]);
 
-  const url = `${req.protocol}://${req.host}${CONNECTOR_PATH}?code=${code}`;
+  const url = `${req.protocol}://${PUBLIC_HOST}${CONNECTOR_PATH}?code=${code}`;
   const qr = {
     svg: await qrcode.toString(url, {
       type: 'svg',

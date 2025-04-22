@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import db from '../services/db.js';
-import { CONNECTOR_PATH, DEVICES_PATH } from '../app.js';
+import { CONNECTOR_PATH, DEVICES_PATH, PUBLIC_HOST } from '../app.js';
 import { connectionCodeAuth, cryptoRandomString } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
     [hash, deviceName]
   );
 
-  const apiUrl = `${req.protocol}://${req.host}${DEVICES_PATH}`;
+  const apiUrl = `${req.protocol}://${PUBLIC_HOST}${DEVICES_PATH}`;
   const params = new URLSearchParams({
     code: req.auth.code,
     protokolibri: 'login',

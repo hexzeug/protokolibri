@@ -1,11 +1,10 @@
 {
   "app.name": "Protokolibri",
-  "app.version": "v1.0.0",
-  "app.source": "https://github.com/hexzeug/protokolibri",
-  "app.license": "https://github.com/hexzeug/protokolibri?tab=MIT-1-ov-file#readme",
   "footer": {
     "sourceCode": "Source code",
-    "license": "MIT license"
+    "sourceCode.url": "https://github.com/hexzeug/protokolibri",
+    "license": "MIT license",
+    "license.url": "https://github.com/hexzeug/protokolibri?tab=MIT-1-ov-file#readme"
   },
   "dashboard": {
     "title": "Dashboard",
