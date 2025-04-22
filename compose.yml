@@ -1,0 +1,40 @@
+services:
+  server:
+    build: server
+    ports:
+      - 8080:8080
+    environment:
+      TZ: Europe/Berlin # server timezone
+      PUBLIC_HOST: 192.168.178.108:8080
+      NODE_ENV: development
+      ADMIN_DEFAULT_PASSWORD: password
+      MARIADB_HOST: mariadb
+      MARIADB_USER: user
+      MARIADB_PASSWORD: test
+      MARIADB_DATABASE: protokolibri
+    develop:
+      watch:
+        - action: sync
+          path: server
+          target: /app
+        - action: rebuild
+          path: server/package.json
+
+  mariadb:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MARIADB_USER: user
+      MARIADB_PASSWORD: test
+      MARIADB_DATABASE: protokolibri
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 4000:80
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: user
+      PMA_PASSWORD: test

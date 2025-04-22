@@ -26,3 +26,12 @@ Super simple http server. Always responds with 201 Created. Logs requests with b
 
 - For best results please disable multitasking (parallel windows) in the iOS settings.
 This is needed because the extension cannot correctly detect the focused tab when there are parallel windows.
+
+### Server
+
+#### Development
+
+Start the development server using `docker compose up`.  
+To specifiy the servers timezone, edit _compose.yml_ (default is `Europe/Berlin`).
+
+...

@@ -1,0 +1,314 @@
+doctype html
+- const PASSWORD_REGEX = '(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[\\W_]).{8,}'
+html(lang=i18n.resolvedLanguage,data-bs-theme="dark",data-api=USERS_PATH)
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="icon", href=`${STATIC_PATH}/img/favicon.ico`, type="image/x-icon")
+    link(rel="icon", href=`${STATIC_PATH}/img/favicon.svg`, type="image/svg+xml")
+    link(rel="stylesheet", href=`${STATIC_PATH}/css/bootstrap.min.css`)
+    link(rel="stylesheet", href=`${STATIC_PATH}/bootstrap-icons.min.css`)
+    title #{t('dashboard.title')} - #{t('app.name')}
+  style.
+    [data-status] > * {
+      display: none;
+    }
+    [data-status=loading] > .loading {
+      display: unset;
+    }
+    [data-status=online] > .online {
+      display: unset;
+    }
+    [data-status=offline] > .offline {
+      display: unset;
+    }
+    [data-status=never] > .never {
+      display: unset;
+    }
+  body.d-flex.flex-column.min-vh-100
+    header.navbar.bg-primary-subtle
+      nav.container
+        a.navbar-brand.d-flex.align-items-center(href="/")
+          img.d-inline-block.me-1(src=`${STATIC_PATH}/img/icon.png`, alt="Protokolibri Icon", width="48", height="48")
+          | #{t('app.name')}
+        .dropdown
+          button.btn.dropdown-toggle(data-bs-toggle="dropdown")
+            i.bi-person-circle.me-1
+            | #{user.name}
+          ul.dropdown-menu.dropdown-menu-end
+            li
+              button.dropdown-item(
+                data-bs-toggle="modal",
+                data-bs-target="#changePassword"
+              )= t('dashboard.changePassword')
+    main.container.flex-fill
+      h1.mt-3.mb-2= t('dashboard.heading')
+      .row.g-2
+        .col-md
+          .bg-body-tertiary.rounded.p-3#devicesPanel
+            h6.text-body-secondary= t('dashboard.panel.devices')
+            form#deviceSelection
+            table.table.align-middle(style="--bs-table-bg: transparent")
+              thead
+                tr
+                  th(scope="col")
+                    i.bi-check2-all
+                  th(scope="col")= t('dashboard.device.name')
+                  th(scope="col")= t('dashboard.device.lastOnline')
+              tbody.table-group-divider
+                each device in devices
+                  tr
+                    th(scope="row")
+                      input.form-check-input(
+                        type="checkbox",
+                        name="devices",
+                        value=device.name
+                        form="deviceSelection"
+                        id="select-" + device.name
+                      )
+                    td
+                      label(for="select-" + device.name)= device.name
+                    td(data-device-status=device.name,data-status="loading")
+                      span.loading.placeholder-wave
+                        span.placeholder.col-4.bg-secondary
+                      span.online
+                        i.bi-circle-fill.text-success.me-2
+                        | #{t('dashboard.device.online.now')}
+                      span.offline
+                        i.bi-circle-fill.text-danger.me-2
+                        span(data-device-last-online=device.name)
+                      span.never
+                        i.bi-circle.text-secondary.me-2
+                        | #{t('dashboard.device.online.never')}
+              tfoot.table-group-divider
+                tr
+            .hstack.gap-2.ms-3
+              i.bi-arrow-90deg-up
+              input.form-check-input#allDevices(type="checkbox")
+              label(for="allDevices")= t('dashboard.device.checkAll')
+        .col-xl-4.col-md-6
+          .sticky-top(style="top: .25rem")
+            .bg-body-tertiary.rounded.p-3.mb-2#exportPanel
+              h6.text-body-secondary= t('dashboard.panel.export')
+              form.needs-validation(
+                action=`${USERS_PATH}/export`,
+                method="get",
+                novalidate
+              )
+                - const today = new Date(Date.now()).toISOString().split('T')[0]
+                //-
+                  yes, this is the current date in UTC which may be off depending on the timezone
+                  but it is only used for the default selected date so it is not very important
+                .mb-2
+                  label.form-label= t('dashboard.export.label.from')
+                  .input-group
+                    .form-floating
+                      input.form-control#startDate(
+                        type="date",
+                        name="startDate",
+                        value=today,
+                        required
+                      )
+                      label(for="startDate")= t('dashboard.export.label.date')
+                    .form-floating
+                      input.form-control#startTime(
+                        type="time",
+                        name="startTime",
+                        value="00:00",
+                        required
+                      )
+                      label(for="startTime")= t('dashboard.export.label.time')
+                .mb-2
+                  label.form-label= t('dashboard.export.label.to')
+                  .input-group.has-validation
+                    .form-floating
+                      input.form-control#endDate(
+                        type="date",
+                        name="endDate",
+                        value=today,
+                        required
+                      )
+                      label(for="endDate")= t('dashboard.export.label.date')
+                    .form-floating
+                      input.form-control#endTime(
+                        type="time",
+                        name="endTime",
+                        value="23:59",
+                        required
+                      )
+                      label(for="endTime")= t('dashboard.export.label.time')
+                    .invalid-feedback= t('dashboard.export.negativePeriod')
+                .btn-group.w-100
+                  button.btn.btn-primary.w-100(type="submit")= t('dashboard.export.exportAll')
+                    i.bi-filetype-csv.ms-2
+                  button.btn.btn-primary.dropdown-toggle.dropdown-toggle-split(
+                    type="button"
+                    data-bs-toggle="dropdown"
+                  )
+                  ul.dropdown-menu.dropdown-menu-end
+                    li
+                      button.dropdown-item(type="submit",name="devices",data-device-selection)= t('dashboard.export.exportSelected')
+            .bg-body-tertiary.rounded.p-3#optionsPanel
+              h6.text-body-secondary= t('dashboard.panel.options')
+              form#unpairForm(action=`${USERS_PATH}/devices/unpair`, method="post")
+                 input(type="hidden", name="devices", data-device-selection)
+              .vstack.gap-2
+                button.btn.btn-primary(
+                  data-bs-toggle="offcanvas",
+                  data-bs-target="#pairing"
+                )= t('dashboard.option.pairDevices')
+                  i.bi-qr-code.ms-2
+                button.btn.btn-secondary(form="unpairForm",type="submit")= t('dashboard.option.unpairSelected')
+                  i.bi-ban.ms-2
+                button.btn.btn-secondary(
+                  disabled=!user.admin,
+                  data-bs-toggle="modal",
+                  data-bs-target="#editDeviceList"
+                )= t('dashboard.option.editDeviceList')
+                  i.bi-gear.ms-2
+        if user.admin
+          div
+            .bg-body-tertiary.rounded.p-3#usersPanel
+              h6.text-body-secondary= t('dashboard.panel.users')
+              table.table.align-middle(style="--bs-table-bg: transparent")
+                thead
+                  tr
+                    th(scope="col")= t('dashboard.user.name')
+                    th.text-end(scope="col")= t('dashboard.user.options')
+                tbody.table-group-divider
+                  each user in users
+                    tr
+                      td= user.name
+                      td.d-flex.flex-wrap.justify-content-end.gap-2
+                        form(
+                          action=`${USERS_PATH}/users/${encodeURIComponent(user.name)}/delete`,
+                          method="post"
+                        )
+                          button.btn.btn-outline-primary(
+                            disabled=user.admin,
+                            type="submit"
+                          )= t('dashboard.user.delete')
+                            i.bi-trash.ms-1
+                tfoot.table-group-divider
+                  tr
+              form.row.g-2.needs-validation(
+                action=`${USERS_PATH}/users`,
+                method="post",
+                novalidate
+              )
+                .col-xl-3.col-lg-4.col-md
+                  label(for="#newUserName")= t('dashboard.user.username')
+                  input.form-control#newUserName(
+                    type="text",
+                    name="username",
+                    required
+                  )
+                  .invalid-feedback= t('dashboard.user.missingUsername')
+                .col-xl-3.col-lg-4.col-md
+                  label(for="#newUserPassword")= t('dashboard.user.password')
+                  input.form-control#newUserPassword(
+                    type="password",
+                    name="password",
+                    pattern=PASSWORD_REGEX,
+                    required
+                  )
+                  .invalid-feedback= t('dashboard.password.patternMismatch')
+                .col-md-auto
+                  label.invisible.d-none.d-md-inline-block
+                  button.d-block.btn.btn-primary(type="submit")= t('dashboard.user.addUser')
+                    i.bi-person-fill-add.ms-1
+    footer.bg-body-secondary.text-body-secondary.mt-4.p-4
+      .container
+        .row.align-items-end.justify-content-between.g-2
+          .col-md-auto.text-center
+            span &copy; 2025 #{pkg.author}
+          .col-md-auto.text-center
+            span #{t('app.name')} v#{pkg.version}
+          .col-md-auto
+            .hstack.gap-2.justify-content-center
+              a.link-secondary.icon-link.link-offset-1.link-underline-opacity-0.link-underline-opacity-100-hover(
+                href=t('footer.sourceCode.url')
+                target="_blank"
+              )
+                i.bi-github
+                | #{t('footer.sourceCode')}
+              .vr
+              a.link-secondary.link-offset-1.link-underline-opacity-0.link-underline-opacity-100-hover(
+                href=t('footer.license.url')
+                target="_blank"
+              )= t('footer.license')
+    .modal.fade#changePassword
+      .modal-dialog.modal-dialog-centered
+        form.modal-content.needs-validation.modal-close-reset(action=`${USERS_PATH}/password`,method="post",novalidate)
+          .modal-header
+            h5.modal-title= t('dashboard.password.change')
+            button.btn-close(type="button",data-bs-dismiss="modal")
+          .modal-body
+            .form-floating.mb-2
+              input.form-control#oldPassword(
+                type="password",
+                name="oldPassword",
+                placeholder="",
+                required
+              )
+              label(for="oldPassword")= t('dashboard.password.current')
+              .invalid-feedback= t('dashboard.password.missingCurrent')
+            .form-floating.mb-2
+              input.form-control#newPassword(
+                type="password",
+                name="newPassword",
+                placeholder="",
+                pattern=PASSWORD_REGEX,
+                required
+              )
+              label(for="newPassword")= t('dashboard.password.new')
+              .invalid-feedback= t('dashboard.password.patternMismatch')
+            .form-floating
+              input.form-control#repeatPassword(
+                type="password",
+                placeholder="",
+                required
+              )
+              label(for="repeatPassword")= t('dashboard.password.repeat')
+              .invalid-feedback= t('dashboard.password.differentPassword')
+          .modal-footer
+            button.btn.btn-secondary(
+              type="button",
+              data-bs-dismiss="modal"
+            )= t('dashboard.password.cancel')
+            button.btn.btn-primary(type="submit")= t('dashboard.password.submit')
+    .offcanvas.offcanvas-end#pairing(data-bs-scroll="true",tabIndex=-1)
+      .offcanvas-header
+        h5.offcanvas-title= t('dashboard.pairing.pair')
+        i.bi-link.ms-2
+        button.btn-close(data-bs-dismiss="offcanvas")
+      .offcanvas-body
+        p= t('dashboard.pairing.instructions')
+        .ratio.ratio-1x1.placeholder-glow.mb-2
+          .placeholder
+          #pairingQR
+        p.text-body-tertiary#pairingURL(style="font-size: 0.5em; word-break: break-all;")
+    .modal.fade#editDeviceList
+      .modal-dialog.modal-dialog-centered.modal-lg
+        form.modal-content.needs-validation.modal-close-reset(action=`${USERS_PATH}/devices`,method="post",novalidate)
+          .modal-header
+            h5.modal-title= t('dashboard.deviceList.edit')
+            button.btn-close(type="button",data-bs-dismiss="modal")
+          .modal-body
+            label.form-label(for="deviceList")= t('dashboard.deviceList.format')
+            textarea.form-control#deviceList(
+              name="deviceList",
+              rows=10
+            )
+              each device, i in devices
+                if i > 0
+                  | #{", "}
+                | #{device.name}
+          .modal-footer
+            button.btn.btn-secondary(
+              type="button",
+              data-bs-dismiss="modal"
+            )= t('dashboard.deviceList.cancel')
+            button.btn.btn-primary(type="submit")= t('dashboard.deviceList.submit')
+  script(src=`${STATIC_PATH}/js/bootstrap.bundle.min.js`)
+  script(src=`${STATIC_PATH}/js/dashboard.js`)
