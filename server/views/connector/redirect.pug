@@ -1,0 +1,25 @@
+doctype html
+html(lang=i18n.resolvedLanguage)
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(name="color-scheme", content="dark light")
+    title #{t('app.name')} - #{t('connector.redirect.title')}
+  style.
+    :root {
+       font-family: sans-serif;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 70ch;
+      margin-inline: auto;
+      margin-block: 2rem;
+    }
+  body
+    .container
+      h1= t('connector.heading')
+      p
+        b= t('connector.redirect.message')
+      p
+        i= t('connector.redirect.help')

@@ -1,0 +1,96 @@
+{
+  "app.name": "Protokolibri",
+  "footer": {
+    "sourceCode": "Source code",
+    "sourceCode.url": "https://github.com/hexzeug/protokolibri",
+    "license": "MIT license",
+    "license.url": "https://github.com/hexzeug/protokolibri?tab=MIT-1-ov-file#readme"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "heading": "Dashboard",
+    "changePassword": "Change password",
+    "panel": {
+      "devices": "Devices",
+      "export": "Export",
+      "options": "Options",
+      "users": "Users"
+    },
+    "device": {
+      "name": "Name",
+      "lastOnline": "Last online",
+      "online": {
+        "now": "Now",
+        "never": "Never (not paired)"
+      },
+      "checkAll": "Check all"
+    },
+    "export": {
+      "label": {
+        "from": "Logs from",
+        "to": "to",
+        "date": "Date",
+        "time": "Time"
+      },
+      "exportAll": "Export",
+      "exportSelected": "Export logs of selected devices",
+      "negativePeriod": "Enter a positive time period."
+    },
+    "option": {
+      "pairDevices": "Pair devices",
+      "unpairSelected": "Unpair selected devices",
+      "editDeviceList": "Edit device list"
+    },
+    "user": {
+      "name": "Name",
+      "options": "Options",
+      "delete": "Delete",
+      "addUser": "Add user",
+      "username": "Name",
+      "password": "Password",
+      "missingUsername": "Enter a username"
+    },
+    "password": {
+      "change": "Change password",
+      "current": "Current password",
+      "missingCurrent": "Required.",
+      "new": "New password",
+      "patternMismatch": "Must be at least 8 characters long and include lowercase, uppercase, numeric and special characters.",
+      "repeat": "Repeat password",
+      "differentPassword": "Passwords don't match.",
+      "cancel": "Cancel",
+      "submit": "Submit"
+    },
+    "pairing": {
+      "pair": "Pair devices",
+      "instructions": "Scan this QR code with a device. Then follow the steps on the device's screen. You can pair multiple devices with the same QR code."
+    },
+    "deviceList": {
+      "edit": "Edit device list",
+      "format": "Comma-seperated device names",
+      "cancel": "Cancel",
+      "submit": "Submit"
+    }
+  },
+  "connector": {
+    "heading": "Protokolibri Device Connection Service",
+    "title": "Connect Device",
+    "cta": "Select this device and press connect",
+    "help": "Name missing? Add new names in the dashboard or ask you administrator",
+    "warning": "WARNING! If you do this you will disconnect the previously connected device",
+    "group": {
+      "unconnected": "Unconnected",
+      "connected": "Connected"
+    },
+    "device": {
+      "unconnected": "{{name}}",
+      "connected": "{{name}} (connected)"
+    },
+    "submit": "Connect",
+    "redirect": {
+      "title": "Redirecting...",
+      "message": "You should be redirected to the Protokolibri Browser Extension...",
+      "help": "You don't get redirected? Please check if you have installed and activated it in the settings app"
+    }
+  }
+}

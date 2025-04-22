@@ -1,0 +1,96 @@
+{
+  "app.name": "Protokolibri",
+  "footer": {
+    "sourceCode": "Quellcode",
+    "sourceCode.url": "https://github.com/hexzeug/protokolibri",
+    "license": "MIT Lizenz (Englisch)",
+    "license.url": "https://github.com/hexzeug/protokolibri?tab=MIT-1-ov-file#readme"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "heading": "Dashboard",
+    "changePassword": "Passwort ändern",
+    "panel": {
+      "devices": "Geräte",
+      "export": "Export",
+      "options": "Optionen",
+      "users": "Benutzer"
+    },
+    "device": {
+      "name": "Name",
+      "lastOnline": "Zuletzt online",
+      "online": {
+        "now": "Jetzt",
+        "never": "Nie (nicht gekoppelt)"
+      },
+      "checkAll": "Alle auswählen"
+    },
+    "export": {
+      "label": {
+        "from": "Protokolle von",
+        "to": "bis",
+        "date": "Datum",
+        "time": "Uhrzeit"
+      },
+      "exportAll": "Exportieren",
+      "exportSelected": "Protokolle von ausgewählten Geräten exportieren",
+      "negativePeriod": "Bitte geben Sie einen positiven Zeitraum an."
+    },
+    "option": {
+      "pairDevices": "Geräte koppeln",
+      "unpairSelected": "Ausgewählte Geräte entkoppeln",
+      "editDeviceList": "Geräteliste bearbeiten"
+    },
+    "user": {
+      "name": "Name",
+      "options": "Optionen",
+      "delete": "Löschen",
+      "addUser": "Benutzer hinzufügen",
+      "username": "Name",
+      "password": "Passwort",
+      "missingUsername": "Bitte einen Benutzernamen eingeben."
+    },
+    "password": {
+      "change": "Passwort ändern",
+      "current": "Aktuelles Passwort",
+      "missingCurrent": "Erforderlich.",
+      "new": "Neues Passwort",
+      "patternMismatch": "Muss mindstens 8 Zeichen umfassen und Kleinbuchstaben, Großbuchstaben, Zahlen und Sonderzeichen enthalten.",
+      "repeat": "Passwort wiederholen",
+      "differentPassword": "Passwörter stimmen nicht überein.",
+      "cancel": "Abbrechen",
+      "submit": "Absenden"
+    },
+    "pairing": {
+      "pair": "Geräte koppeln",
+      "instructions": "Scannen Sie diesen QR-Code mit einem Gerät. Folgen Sie dann den Schritten auf dem Bildschirm des Geräts. Sie können mehrere Geräte über den selben QR-Code koppeln."
+    },
+    "deviceList": {
+      "edit": "Geräteliste bearbeiten",
+      "format": "Gerätenamen (durch Kommas getrennt)",
+      "cancel": "Abbrechen",
+      "submit": "Absenden"
+    }
+  },
+  "connector": {
+    "heading": "Protokolibri-Geräteverbindungsdienst",
+    "title": "Gerät Verbinden",
+    "cta": "Wählen Sie dieses Gerät aus und drücken Sie verbinden",
+    "help": "Der Name fehlt? Fügen Sie neue Namen im Dashboard hinzu oder fragen Sie ihren Administrator",
+    "warning": "WARNUNG! Wenn Sie fortfahren, wird das zuvor verbundene Gerät getrennt",
+    "group": {
+      "unconnected": "Nicht verbundene",
+      "connected": "Verbundene"
+    },
+    "device": {
+      "unconnected": "{{name}}",
+      "connected": "{{name}} (verbunden)"
+    },
+    "submit": "Verbinden",
+    "redirect": {
+      "title": "Weiterleiten...",
+      "message": "Sie sollten zur Protokolibri-Browsererweiterung weitergeleitet werden...",
+      "help": "Sie werden nicht weitergeleitet? Bitte überprüfen Sie, ob sie die Erweiterung installiert und in der Einstellungen-App aktiviert haben"
+    }
+  }
+}

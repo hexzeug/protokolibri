@@ -4,3 +4,6 @@
 
 # local files
 *.local
+
+# node.js
+node_modules
