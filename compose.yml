@@ -12,6 +12,7 @@ services:
       MARIADB_USER: user
       MARIADB_PASSWORD: test
       MARIADB_DATABASE: protokolibri
+      MARIADB_SSL: 1
     develop:
       watch:
         - action: sync
