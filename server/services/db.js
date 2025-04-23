@@ -2,16 +2,40 @@ import { createPool } from 'mariadb';
 
 export const EVENT_TYPES = ['created', 'activated', 'updated', 'removed'];
 
+const MARIADB_HOST = process.env.MARIADB_HOST;
+const MARIADB_PORT = process.env.MARIADB_PORT;
+const MARIADB_USER = process.env.MARIADB_USER;
+const MARIADB_PASSWORD = process.env.MARIADB_PASSWORD;
+const MARIADB_DATABASE = process.env.MARIADB_DATABASE;
+
+if (
+  typeof MARIADB_HOST != 'string' ||
+  typeof MARIADB_USER != 'string' ||
+  typeof MARIADB_PASSWORD != 'string' ||
+  typeof MARIADB_DATABASE != 'string'
+) {
+  throw new Error('Database credentials missing');
+}
+
+const SSL = process.env.MARIADB_SSL === '1';
+
+console.log(
+  `connecting to database '${MARIADB_DATABASE}' as '${MARIADB_USER}' at '${MARIADB_HOST}${MARIADB_PORT ? ':' + MARIADB_PORT : ''}' (encrypted: ${SSL})`
+);
 const pool = createPool({
-  host: process.env.MARIADB_HOST,
-  user: process.env.MARIADB_USER,
-  password: process.env.MARIADB_PASSWORD,
-  database: process.env.MARIADB_DATABASE,
+  host: MARIADB_HOST,
+  port: MARIADB_PORT ? parseInt(MARIADB_PORT) : undefined,
+  user: MARIADB_USER,
+  password: MARIADB_PASSWORD,
+  database: MARIADB_DATABASE,
   connectionLimit: 5,
   trace: process.env.NODE_ENV === 'development',
-  timezone: process.env.TZ,
+  ssl: SSL,
+  timezone: process.env.TZ ?? 'local',
 });
 
 await pool.importFile({ file: './schema.sql' });
+
+console.log('database setup completed');
 
 export default pool;

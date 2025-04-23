@@ -26,14 +26,16 @@ curl -o- https://raw.githubusercontent.com/hexzeug/protokolibri/refs/heads/main/
 
 Configure the following environment variables in the file `protokolibri.env` in your home directory:
 
-- `HOSTNAME`: (optional) Hostname the server should listen on. Can be set to `localhost` to only listen to requests from the same machine
-- `PORT`: (optional) Port, defaults to `8080`
-- `PUBLIC_HOST`: (optional) Use to set the public host when behind a reverse proxy
-- `ADMIN_DEFAULT_PASSWORD`: Initial password used for creating the user 'admin'
-- `MARIADB_HOST`: Host of mariadb, for example `mydb.com`
-- `MARIADB_USER`: Username for mariadb
-- `MARIADB_PASSWORD`: Password for mariadb
-- `MARIADB_DATABASE`: Name of the database protokolibri should use
+- `HOSTNAME`= (optional) Hostname the server should listen on. Can be set to `localhost` to only listen to requests from the same machine
+- `PORT`= (optional) Port, defaults to `8080`
+- `PUBLIC_HOST`= (optional) Use to set the public host when behind a reverse proxy
+- `ADMIN_DEFAULT_PASSWORD`= Initial password used for creating the user 'admin'
+- `MARIADB_HOST`= Host of mariadb, for example `mydb.com`
+- `MARIADB_PORT`= (optional) Port of mariadb, defaults to `3306`
+- `MARIADB_SSL`= (optional) Set to `1` to encrypt communication with database
+- `MARIADB_USER`= Username for mariadb
+- `MARIADB_PASSWORD`= Password for mariadb
+- `MARIADB_DATABASE`= Name of the database protokolibri should use
 
 Configure protokolibri to start when booting
 
