@@ -13,6 +13,7 @@ services:
       MARIADB_PASSWORD: test
       MARIADB_DATABASE: protokolibri
       MARIADB_SSL: 1
+      MARIADB_SSL_TRUST_SERVER_UNSAFE: 1
     develop:
       watch:
         - action: sync
