@@ -32,10 +32,12 @@ Configure the following environment variables in the file `protokolibri.env` in 
 - `ADMIN_DEFAULT_PASSWORD`= Initial password used for creating the user 'admin'
 - `MARIADB_HOST`= Host of mariadb, for example `mydb.com`
 - `MARIADB_PORT`= (optional) Port of mariadb, defaults to `3306`
-- `MARIADB_SSL`= (optional) Set to `1` to encrypt communication with database
 - `MARIADB_USER`= Username for mariadb
 - `MARIADB_PASSWORD`= Password for mariadb
 - `MARIADB_DATABASE`= Name of the database protokolibri should use
+- `MARIADB_SSL`= (optional) Set to `1` to encrypt communication with database
+- `MARIADB_SSL_TRUST_SERVER_UNSAFE`= (optional) Set to `1` to skip verifying the SSL certificate of the server.
+  Useful for self signed certificates, but considered unsafe.
 
 Configure protokolibri to start when booting
 
