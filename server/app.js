@@ -89,13 +89,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 console.log('starting server...');
-const server = app.listen(PORT, HOSTNAME, () => {
+app.listen(PORT, HOSTNAME, () => {
   console.log(`started server at ${HOSTNAME}:${PORT}`);
-});
-
-process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: stopping server...');
-  server.close(() => {
-    console.log('server closed');
-  });
 });
